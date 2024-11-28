@@ -306,10 +306,31 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
 
+    // data for Bar Chart A
+    let barchart1AC = @json($barchart1AC);
+    let barchart1Eu = @json($barchart1Eu);
+    let barchart1MA = @json($barchart1MA);
+    let barchart1AP = @json($barchart1AP);
+    let barchart2AC = @json($barchart2AC);
+    let barchart2Eu = @json($barchart2Eu);
+    let barchart2MA = @json($barchart2MA);
+    let barchart2AP = @json($barchart2AP);
+    let barchart3AC = @json($barchart3AC);
+    let barchart3Eu = @json($barchart3Eu);
+    let barchart3MA = @json($barchart3MA);
+    let barchart3AP = @json($barchart3AP);
+    let barchart4AC = @json($barchart4AC);
+    let barchart4Eu = @json($barchart4Eu);
+    let barchart4MA = @json($barchart4MA);
+    let barchart4AP = @json($barchart4AP);
+    // end Bar Chart A
+
+    // your code here
     let countAmericasAndCanada = 150;
     let countMiddleEastAndAfrica = 12;
     let countEurope = 111;
     let countAsiaAndPacific = 68;
+
     let submmitted = 1;
     let notsubmmitted = 0;
     let year_chosen = '24';
@@ -1252,48 +1273,29 @@
 
     function drawBarChartA(year) {
 
-        if (year == '22') {
-            barchartAmALow = 4;
-            barchartAmAHigh = 20;
-            barchartEuALow = 15;
-            barchartEuAHigh = 22;
-            barchartMeALow = 10;
-            barchartMeAHigh = 25;
-            barchartAsALow = 7;
-            barchartAsAHigh = 17;
-        }
-
-        if (year == '23') {
-            barchartAmALow = 14;
-            barchartAmAHigh = 40;
-            barchartEuALow = 25;
-            barchartEuAHigh = 32;
-            barchartMeALow = 20;
-            barchartMeAHigh = 35;
-            barchartAsALow = 17;
-            barchartAsAHigh = 27;
-        }
-
         var data = google.visualization.arrayToDataTable([
-          ['Regions', 'Submitted', 'Not Submitted'],
-          ['Americas & Canada', barchartAmALow, barchartAmAHigh],
-          ['Europe', barchartEuALow, barchartEuAHigh],
-          ['M.E. & Africa', barchartMeALow, barchartMeAHigh],
-          ['Asia & Pacific', barchartAsALow, barchartAsAHigh]
+          ['Data per Quarters', 'Americas & Canada', 'Europe', 'M.E. & Africa', 'Asia & Pacific'],
+          ['1st Quarter', barchart1AC, barchart1Eu, barchart1MA, barchart1AP],
+          ['2nd Quarter', barchart2AC, barchart2Eu, barchart2MA, barchart2AP],
+          ['3rd Quarter', barchart3AC, barchart3Eu, barchart3MA, barchart3AP],
+          ['4th Quarter', barchart4AC, barchart4Eu, barchart4MA, barchart4AP]
         ]);
 
         var options = {
             width: 550,
             height: 400,
-            legend: { position: 'top', maxLines: 2 },
+            legend: { position: 'top', maxLines: 4 },
             bar: { groupWidth: '75%' },
             isStacked: true,
             chart: {
-            title: 'Report Submitted on the 1st Quarter',
+            title: 'Accomplishment Reports Submitted',
                 subtitle: 'Based on most recent and previous reports data'
             },
             series: {
                 0:{color:'green'},
+                1:{color:'yellow'},
+                2:{color:'blue'},
+                3:{color:'orange'},
             }
         };
 

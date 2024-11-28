@@ -4,32 +4,20 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Accomplishment;
+use App\Models\CulturalEventsAndTargetAudiences;
+use DB;
 
 class ReportsController extends Controller
 {
     public function index() {
-        // $data = DB:table('accomplishment')->whereIn('month', ['january', 'february', 'march'])
-        //                                 ->join('country', 'country.id', 'country_id')
-        //                                 ->get();
 
-        // dd($data);
-        $data = Accomplishment::all();
+        $data_stats = Accomplishment::all();
+        $data_events = CulturalEventsAndTargetAudiences::all();
 
         return view('reports.index', compact(
-            'data'
+            'data_stats',
+            'data_events'
         ));
-    }
 
-    public function regionQuarterOne() {
-
-        $data = Accomplishment::whereIn('month', 
-                                [
-                                    'january', 
-                                    'february', 
-                                    'march'
-                                ])
-                                ->get();
-
-        dd($data);
     }
 }
