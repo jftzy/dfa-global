@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Accomplishment;
 use App\Models\Country;
+use App\Models\CulturalEventAndTargetAudience;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -22,7 +23,7 @@ class SettingsController extends Controller
         $request->validate([
             'year' => 'required|Numeric',
             'month' => 'required|String',
-            'file' => 'required|mimes:csv,text|max:2048'
+            'file' => 'required|mimes:csv,text,text/csv|max:2048'
         ]);
 
         // need validation if filename already exist soon..
@@ -77,6 +78,51 @@ class SettingsController extends Controller
             $accomplishment['cultural_domains'] = $report['cultural_domains'];
             $accomplishment['created_at'] = $dateTime;
             $accomplishment->save();
+        }
+
+        // return a response
+        return redirect('settings')->with('success', 'Data uploaded successfully');
+    }
+
+    public function uploadEvents(Request $request) {
+
+        // validations
+        $request->validate([
+            'date_from' => 'required|Date',
+            'date_to' => 'required|Date',
+            'file_event' => 'required|mimes:csv,text,text/csv|max:2048'
+        ]);
+
+        // need validation if filename already exist soon..
+
+        // store the file -- manipulate the data
+        $file = $request->file('file_event');
+        $name = $file->getClientOriginalName();
+        $name = str_replace(',','_', $name);
+        $name = explode('.', $name);
+        $time = date('hidmy');
+        $nameStack = $name[0].$time;
+        $name = implode('.', [$nameStack,$name[1]]);
+        $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
+
+        // process data to database
+
+        $dateTime = date('Y-m-d H:i:s');
+        $reports = $this->csvToArray($file);
+
+        foreach($reports as $report) {
+            // call model instances every loop instances -- refactor if have any better solution.
+            $events = new CulturalEventAndTargetAudience;
+
+            // values
+            $events['host_communities'] = $reports['host_communities'];
+            $events['filipino_communities'] = $reports['filipino_communities'];
+            $events['other_stakeholders'] = $reports['other_stakeholders'];
+            $events['title_of_the_event'] = $reports['title_of_the_event'];
+            $events['short_description'] = $reports['short_description'];
+            $events['date_from'] = $request['date_from'];
+            $events['date_to'] = $request['date_to'];
+            $events->save();
         }
 
         // return a response
