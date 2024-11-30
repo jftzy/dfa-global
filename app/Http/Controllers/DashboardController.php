@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Models\Accomplishment;
+use App\Models\Country;
 use Illuminate\Http\Request;
 use DB;
 
@@ -160,5 +161,58 @@ class DashboardController extends Controller
                         'barchart4MA',
                         'barchart4AP'
                     ));
+    }
+
+    public function index2($yr = null) {
+        $year = $yr ?? date('Y');
+        $data = DB::table('accomplishments')->where('accomplishments.year', $year)
+                                        ->select('countries.name as country','regions.name as region',DB::raw('count(accomplishments.id) as total'))
+                                        ->leftjoin('countries', 'countries.id', 'country_id')
+                                        ->leftjoin('regions', 'regions.id', 'countries.region_id')
+                                        ->groupBy('countries.name','regions.name')
+                                        ->get();
+
+        $r = "['Country', 'Total Submitted Report'],";
+        foreach($data as $d){
+            $r.="['".$d->country."', ".$d->total."],";
+        }
+        $r = rtrim($r,",");
+        return view('dashboard2',compact('r','year'));
+    }
+
+    public function get_data_per_country() {
+        $yr = $_GET['yr'] ?? '';
+        $country = null;
+        if(strlen($_GET['country']) > 2)
+            $country = Country::whereName($_GET['country'])->first();
+
+        $qtr_qry = Accomplishment::groupBy('quarter')->select('quarter', DB::raw('count(*) as total'));
+        if(strlen($_GET['country']) > 2)
+            $qtr_qry->where('country_id',$country->id)->where('year',$yr);
+        $qtr = $qtr_qry->get();
+
+        $project_type_qry = Accomplishment::groupBy('project_type')->select('project_type', DB::raw('count(*) as total'));
+        if(strlen($_GET['country']) > 2)
+            $project_type_qry->where('country_id',$country->id)->where('year',$yr);
+        $project_type = $project_type_qry->get();
+
+        $project_classification_qry = Accomplishment::groupBy('project_classification')->select('project_classification', DB::raw('count(*) as total'));
+        if(strlen($_GET['country']) > 2)
+            $project_classification_qry->where('country_id',$country->id)->where('year',$yr);
+        $project_classification = $project_classification_qry->get();
+
+        $foreign_policy_pillar_qry = Accomplishment::groupBy('foreign_policy_pillar')->select('foreign_policy_pillar', DB::raw('count(*) as total'));
+        if(strlen($_GET['country']) > 2)
+            $foreign_policy_pillar_qry->where('country_id',$country->id)->where('year',$yr);
+        $foreign_policy_pillar = $foreign_policy_pillar_qry->get();
+
+
+        return response()->json([
+            'project_type' => $project_type,
+            'project_classification' => $project_classification,
+            'foreign_policy_pillar' => $foreign_policy_pillar,
+            'qtr' => $qtr,
+        ]);
+      
     }
 }
