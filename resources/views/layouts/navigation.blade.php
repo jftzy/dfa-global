@@ -24,14 +24,31 @@
                     <span class="absolute -right-4 top-2.5 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Beta</span>
                 </x-nav-link>
             </div>
-            <div class="hidden space-x-8 sm:flex mb-2 relative">
-                <x-nav-link :href="route('reports.index')" :active="request()->routeIs('reports')" class="text-gray-400">
-                    <x-icons.icon-files class="h-5"></x-icons.icon-files>
-                    <span class="pl-2">
-                        {{ __('Reports') }}
-                    </span>
-                    <span class="absolute -right-4 top-2.5 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Beta</span>
-                </x-nav-link>
+            <div class="hidden space-x-8 sm:flex sm:flex-col mb-2 relative">
+                <button type="button" class="inline-flex items-center px-2 py-2 rounded bg-transparent w-full border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-100 focus:outline-none transition duration-150 ease-in-out hover:scale-105" aria-controls="reports-dropdown" data-collapse-toggle="reports-dropdown">
+                      <x-icons.icon-files class="h-5"></x-icons.icon-files>
+                      <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ __('Reports') }}</span>
+                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                      </svg>
+                </button>
+                <ul id="reports-dropdown" class="hidden py-2 space-y-2">
+                      <li>
+                        <x-sub-nav-link :href="route('reports.accomplishments')" :active="request()->routeIs('reports-accomplishments')" class="text-gray-400">
+                            Accomplishments
+                        </x-sub-nav-link>
+                      </li>
+                      <li>
+                        <x-sub-nav-link :href="route('reports.events')" :active="request()->routeIs('reports-events')" class="text-gray-400">
+                            Events
+                        </x-sub-nav-link>
+                      </li>
+                      <li>
+                        <x-sub-nav-link :href="route('reports.translations')" :active="request()->routeIs('reports-translations')" class="text-gray-400">
+                            Translations
+                        </x-sub-nav-link>
+                      </li>
+                </ul>
             </div>
             <div class="hidden space-x-8 sm:flex mb-2 relative">
                 <x-nav-link :href="route('dashboard')" :active="request()->routeIs('users')" class="text-gray-400">
@@ -42,14 +59,31 @@
                     <span class="absolute -right-4 top-2.5 bg-yellow-100 text-yellow-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Soon</span>
                 </x-nav-link>
             </div>
-            <div class="hidden space-x-8 sm:flex mb-2 relative">
-                <x-nav-link :href="route('settings.index')" :active="request()->routeIs('settings.index')" class="text-gray-400">
-                    <x-icons.icon-settings class="h-5"></x-icons.icon-settings>
-                    <span class="pl-2">
-                        {{ __('Data Settings') }}
-                    </span>
-                    <span class="absolute -right-4 top-2.5 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Beta</span>
-                </x-nav-link>
+            <div class="hidden space-x-8 sm:flex sm:flex-col mb-2 relative">
+                <button type="button" class="inline-flex items-center px-2 py-2 rounded bg-transparent w-full border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-100 focus:outline-none transition duration-150 ease-in-out hover:scale-105" aria-controls="settings-dropdown" data-collapse-toggle="settings-dropdown">
+                      <x-icons.icon-settings class="h-5"></x-icons.icon-settings>
+                      <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ __('Data Settings') }}</span>
+                      <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                      </svg>
+                </button>
+                <ul id="settings-dropdown" class="hidden py-2 space-y-2">
+                      <li>
+                        <x-sub-nav-link :href="route('settings.accomplishments')" :active="request()->routeIs('settings-accomplishments')" class="text-gray-400">
+                            Accomplishments
+                        </x-sub-nav-link>
+                      </li>
+                      <li>
+                        <x-sub-nav-link :href="route('settings.events')" :active="request()->routeIs('settings-events')" class="text-gray-400">
+                            Events
+                        </x-sub-nav-link>
+                      </li>
+                      <li>
+                        <x-sub-nav-link :href="route('settings.translations')" :active="request()->routeIs('settings-translations')" class="text-gray-400">
+                            Translations
+                        </x-sub-nav-link>
+                      </li>
+                </ul>
             </div>
         </div>
 
