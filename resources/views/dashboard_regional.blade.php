@@ -6,6 +6,7 @@
         </h2>
     </x-slot>
     <input type="hidden" name="yr" id="yr" value="{{$year}}">
+    <input type="hidden" name="reg" id="reg" value="{{$region}}">
     <div class="py-6" x-data="{}">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg inline-flex justify-between items-center w-full">
@@ -13,7 +14,7 @@
                     <x-icons.icon-globe class="h-12 w-12 mr-2"></x-icons.icon-globe>
                     <div class="flex flex-col">
                         <p class="text-lg font-bold">
-                            Geographical Statistics per Country
+                            Geographical Statistics per Region
                         </p>
                         <small class="text-sm text-gray-500">Showing global map of cutural activities accross the selected regions.</small>
                     </div>
@@ -22,7 +23,7 @@
                 <div class="border border-gray-300 rounded-lg shadow p-2 flex flex-col">
                     <h3 class="text-gray-600 font-semibold text-xs pb-1">Filters</h3>
                     <div class="inline-flex items-center">
-                        <form class="max-w-sm mx-1">
+                        <form class="max-w-sm mx-1" method="get" action="{{route('dashboard.regional')}}" id="filter_form" name="filter_form">
                           <select id="year" name="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Choose year</option>
                             @for($y = 2024; $y >= 2020; $y--)
@@ -31,44 +32,21 @@
                             
                             
                           </select>
+
+                          <select id="region" name="region" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                            
+                            
+                            <option value="1" @if($region == 1) selected @endif selected>Americas and Canada</option>
+                            <option value="2" @if($region == 2) selected @endif>Europe</option>
+                            <option value="3" @if($region == 3) selected @endif>Middle East and Africa</option>
+                            <option value="4" @if($region == 4) selected @endif>Asia and Pacific</option>
+                           
+                            
+                            
+                          </select>
                         </form>
 
-
-                        <!-- Dropdown menu totalCA -->
-                        <div id="totalCAdropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="totalCA">
-                              <li>
-                                <a class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click="drawRegionsMapSubmissions()">All Regions</a>
-                              </li>
-                              <li>
-                                <a class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click="drawRegionsMapFilterAC()">Americas and Canada</a>
-                              </li>
-                              <li>
-                                <a class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click="drawRegionsMapFilterEU()">Europe</a>
-                              </li>
-                              <li>
-                                <a class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click="drawRegionsMapFilterME()">Middle East and Africa</a>
-                              </li>
-                              <li>
-                                <a class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click="drawRegionsMapFilterAP()">Asia and Pacific</a>
-                              </li>
-                            </ul>
-                        </div>
-
-                        <!-- Dropdown menu totalCA -->
-                        <div id="projectTypedropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
-                            <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="projectType">
-                              <li>
-                                <a class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click="drawRegionsMapProjectRec()">Recurring</a>
-                              </li>
-                              <li>
-                                <a class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click="drawRegionsMapProjectFlg()">Flagship</a>
-                              </li>
-                              <li>
-                                <a class="cursor-pointer block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white" @click="drawRegionsMapProjectOT()">One Time</a>
-                              </li>
-                            </ul>
-                        </div>
+                       
 
                     </div>
                 </div>
@@ -115,6 +93,7 @@
                             <table class="table table-bordered">
                               <thead>
                                   <tr class="table-info">
+                                    <th>Country</th>
                                     <th>Project Type</th>
                                     <th>Total</th>
                                   </tr>
@@ -132,6 +111,7 @@
                           <table class="table table-bordered">
                             <thead>
                                 <tr class="table-info">
+                                  <th>Country</th>
                                   <th>Project Classification</th>
                                   <th>Total</th>
                                 </tr>
@@ -153,6 +133,7 @@
                           <table class="table table-bordered">
                             <thead>
                                 <tr class="table-info">
+                                  <th>Country</th>
                                   <th>Foreign Policy Pillar</th>
                                   <th>Total</th>
                                 </tr>
@@ -201,7 +182,13 @@
 
     $('#year').on('change', function() {
       //console.log( this.value );
-      window.location.href = "{{route('dashboard2',':id')}}".replace(':id', this.value);
+      //window.location.href = "{{route('dashboard.data.region',[':id','region'])}}".replace(':id', this.value).replace(':region', $(''));
+      $('#filter_form').submit();
+    });
+    $('#region').on('change', function() {
+      //console.log( this.value );
+      //window.location.href = "{{route('dashboard.data.region',[':id','region'])}}".replace(':id', this.value).replace(':region', $(''));
+      $('#filter_form').submit();
     });
 
     // // your code here
@@ -228,7 +215,7 @@
     google.charts.setOnLoadCallback(drawProjectType);
    
 
-    get_data();
+    get_data({{$region}});
 
     function drawRegionsMapSubmissions() {
 
@@ -258,31 +245,31 @@
         chart.draw(data, options);
     }
 
-    function get_data(country = null){
+    function get_data(region = null){
       $.ajax({
-        url: "{{route('dashboard.data')}}",
+        url: "{{route('dashboard.data.region')}}",
         type: "get", 
         data: { 
           yr: $('#yr').val(), 
-          country: country
+          region: region
         },
         success: function(response) {
 
        
           $('#tab_project_type').html('');
           $.each(response.project_type , function(index, val) {
-            $('#tab_project_type').append('<tr><td>'+val.project_type+'</td><td align="center">'+val.total+'</td></tr>');          
+            $('#tab_project_type').append('<tr><td>'+val.country+'</td><td>'+val.project_type+'</td><td align="center">'+val.total+'</td></tr>');          
           });
         
 
           $('#tab_project_classification').html('');
           $.each(response.project_classification , function(index, val) {
-            $('#tab_project_classification').append('<tr><td>'+val.project_classification+'</td><td align="center">'+val.total+'</td></tr>');
+            $('#tab_project_classification').append('<tr><td>'+val.country+'</td><td>'+val.project_classification+'</td><td align="center">'+val.total+'</td></tr>');
           });
 
           $('#tab_foreign_policy_pillar').html('');
           $.each(response.foreign_policy_pillar , function(index, val) {
-            $('#tab_foreign_policy_pillar').append('<tr><td>'+val.foreign_policy_pillar+'</td><td align="center">'+val.total+'</td></tr>');
+            $('#tab_foreign_policy_pillar').append('<tr><td>'+val.country+'</td><td>'+val.foreign_policy_pillar+'</td><td align="center">'+val.total+'</td></tr>');
           });          
 
           $('#tab_qtr').html('');
