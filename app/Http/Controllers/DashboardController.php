@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 use App\Models\Accomplishment;
 use App\Models\Country;
+use App\Models\Region;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DashboardController extends Controller
 {
@@ -207,6 +209,60 @@ class DashboardController extends Controller
         $foreign_policy_pillar = $foreign_policy_pillar_qry->get();
 
 
+        return response()->json([
+            'project_type' => $project_type,
+            'project_classification' => $project_classification,
+            'foreign_policy_pillar' => $foreign_policy_pillar,
+            'qtr' => $qtr,
+        ]);
+      
+    }
+
+    public function get_data_per_region() {
+        $yr = $_GET['yr'] ?? '';
+        $region = null;
+       
+            $region = Region::whereId($_GET['region'])->first();
+
+        $qtr_qry = DB::table('accomplishments')
+            ->select('accomplishments.quarter',DB::raw('count(accomplishments.id) as total'))
+            ->leftjoin('countries', 'countries.id', 'country_id')
+            ->leftjoin('regions', 'regions.id', 'countries.region_id')
+            ->groupBy('accomplishments.quarter');
+       
+            $qtr_qry->where('countries.region_id',$region->id)->where('accomplishments.year',$yr);
+        $qtr = $qtr_qry->get();
+
+
+        $project_type_qry = DB::table('accomplishments')
+            ->select('accomplishments.project_type','countries.name as country',DB::raw('count(accomplishments.id) as total'))
+            ->leftjoin('countries', 'countries.id', 'country_id')
+            ->leftjoin('regions', 'regions.id', 'countries.region_id')
+            ->groupBy('accomplishments.project_type','countries.name');
+  
+            $project_type_qry->where('countries.region_id',$region->id)->where('accomplishments.year',$yr);
+        $project_type = $project_type_qry->get();
+      
+
+        $project_classification_qry = DB::table('accomplishments')
+            ->select('accomplishments.project_classification','countries.name as country',DB::raw('count(accomplishments.id) as total'))
+            ->leftjoin('countries', 'countries.id', 'country_id')
+            ->leftjoin('regions', 'regions.id', 'countries.region_id')
+            ->groupBy('accomplishments.project_classification','countries.name');
+     
+            $project_classification_qry->where('countries.region_id',$region->id)->where('accomplishments.year',$yr);
+        $project_classification = $project_classification_qry->get();
+      
+
+        $foreign_policy_pillar_qry = DB::table('accomplishments')
+            ->select('accomplishments.foreign_policy_pillar','countries.name as country',DB::raw('count(accomplishments.id) as total'))
+            ->leftjoin('countries', 'countries.id', 'country_id')
+            ->leftjoin('regions', 'regions.id', 'countries.region_id')
+            ->groupBy('accomplishments.foreign_policy_pillar','countries.name');
+      
+            $foreign_policy_pillar_qry->where('countries.region_id',$region->id)->where('accomplishments.year',$yr);
+        $foreign_policy_pillar = $foreign_policy_pillar_qry->get();
+     
         return response()->json([
             'project_type' => $project_type,
             'project_classification' => $project_classification,

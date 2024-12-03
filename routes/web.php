@@ -20,6 +20,8 @@ Route::middleware('auth')->group(function () {
     // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard/{yr?}', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard-data/data-per-country', [DashboardController::class, 'get_data_per_country'])->name('dashboard.data');
+    Route::get('/dashboard-regional', [DashboardController::class, 'dashboard_regional'])->name('dashboard.regional');
+    Route::get('/dashboard/data-per-region', [DashboardController::class, 'get_data_per_region'])->name('dashboard.data.region');
 
     // Profile Routing
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
