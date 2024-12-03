@@ -19,6 +19,7 @@ Route::middleware('auth')->group(function () {
     // Dashboard Routing
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard2/{yr?}', [DashboardController::class, 'index2'])->name('dashboard2');
+    Route::get('/dashboard-regional/{yr?}', [DashboardController::class, 'dashboard_regional'])->name('dashboard.regional');
     Route::get('/dashboard/data-per-country', [DashboardController::class, 'get_data_per_country'])->name('dashboard.data');
 
     // Profile Routing

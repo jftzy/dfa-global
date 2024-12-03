@@ -12,6 +12,7 @@ class AccomplishmentsSeeder extends Seeder
      */
     public function run(): void
     {
+        /*
         \App\Models\Accomplishment::insert([
             [
                 'country_id' => 1,
@@ -104,6 +105,7 @@ class AccomplishmentsSeeder extends Seeder
                 'created_at' => now()
             ]
         ]);
+        */
 
     }
 }

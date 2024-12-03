@@ -5,6 +5,7 @@ use App\Models\Accomplishment;
 use App\Models\Country;
 use Illuminate\Http\Request;
 use DB;
+use Illuminate\Database\Eloquent\Factories\Factory;
 
 class DashboardController extends Controller
 {
@@ -178,6 +179,24 @@ class DashboardController extends Controller
         }
         $r = rtrim($r,",");
         return view('dashboard2',compact('r','year'));
+    }
+
+    public function dashboard_regional($yr = null) {
+       
+        $year = $yr ?? date('Y');
+        $data = DB::table('accomplishments')->where('accomplishments.year', $year)
+                                        ->select('countries.name as country','regions.name as region',DB::raw('count(accomplishments.id) as total'))
+                                        ->leftjoin('countries', 'countries.id', 'country_id')
+                                        ->leftjoin('regions', 'regions.id', 'countries.region_id')
+                                        ->groupBy('countries.name','regions.name')
+                                        ->get();
+
+        $r = "['Country', 'Total Submitted Report'],";
+        foreach($data as $d){
+            $r.="['".$d->country."', ".$d->total."],";
+        }
+        $r = rtrim($r,",");
+        return view('dashboard_regional',compact('r','year','data'));
     }
 
     public function get_data_per_country() {
