@@ -188,7 +188,7 @@
                           <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Switch View</span>
                         </label>
 
-                        <!-- line chart -->
+                        <!-- bar chart -->
                         <div class="w-full bg-white rounded-lg dark:bg-gray-800" id="barChart_mode">
                           <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
                             <div class="flex items-center">
@@ -202,7 +202,7 @@
                           </div>
                           <div id="bar-chart"></div>
                         </div>
-                        <!-- end line chart -->
+                        <!-- end bar chart -->
 
                         <div id="barTable_mode" class="hidden w-full">
                             <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">Project Classification Total</h5>

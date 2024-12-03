@@ -23,7 +23,7 @@
                 <div class="border border-gray-300 rounded-lg shadow p-2 flex flex-col">
                     <h3 class="text-gray-600 font-semibold text-xs pb-1">Filters</h3>
                     <div class="inline-flex items-center">
-                        <form class="max-w-sm mx-1" method="get" action="{{route('dashboard.regional')}}" id="filter_form" name="filter_form">
+                        <form class="max-w-sm mx-1 inline-flex gap-2" method="get" action="{{route('dashboard.regional')}}" id="filter_form" name="filter_form">
                           <select id="year" name="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             <option value="" selected>Choose year</option>
                             @for($y = 2024; $y >= 2020; $y--)
@@ -33,7 +33,7 @@
                             
                           </select>
 
-                          <select id="region" name="region" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                          <select id="region" name="region" class="min-w-[180px] bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                             
                             
                             <option value="1" @if($region == 1) selected @endif selected>Americas and Canada</option>
@@ -54,7 +54,7 @@
             </div>
 
             <!-- Regional Global Map Chart -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-t-lg w-full inline-flex justify-between mt-4 p-3">
+            <div class="hidden bg-white overflow-hidden shadow-sm sm:rounded-t-lg w-full inline-flex justify-between mt-4 p-3">
                 <div>
                     <h3 class="font-bold table_mode_title pt-1" style="display: none;">Report 2024</h3>
                 </div>
@@ -75,7 +75,7 @@
                 </label>
             </div>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-b-lg chart_mode">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-b-lg chart_mode mt-4">
                 <div class="p-6 text-gray-900 inline-flex items-center justify-center w-full">
                     <div id="regions_div" style="width: 900px; height: 500px;"></div>
                 </div>
@@ -88,9 +88,24 @@
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
                   
                     <div class="p-5 text-gray-900 inline-flex w-full">
+
+                        <!-- bar chart -->
+                        <div class="hidden w-full bg-white rounded-lg dark:bg-gray-800" id="barChart_mode">
+                          <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
+                            <div class="flex items-center">
+                                <div class="flex items-center justify-between">
+                                  <div>
+                                    <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Data generated</p>
+                                  </div>
+                                </div>
+                            </div>
+                          </div>
+                          <div id="bar-chart"></div>
+                        </div>
+                        <!-- end bar chart -->
                     
-                          <div>
-                            <table class="table table-bordered">
+                          <div class="w-full">
+                            <table class="table table-bordered w-full">
                               <thead>
                                   <tr class="table-info">
                                     <th>Country</th>
@@ -107,7 +122,7 @@
                 </div>
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
                     <div class="p-5 text-gray-900 inline-flex w-full">
-                        <div id="barchartB" style="width: fit-content; height: fit-content;">
+                        <div id="barchartB" class="w-full">
                           <table class="table table-bordered">
                             <thead>
                                 <tr class="table-info">
@@ -129,7 +144,7 @@
                 <!-- Comprehensive Bar Chart -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
                     <div class="p-5 text-gray-900 inline-flex w-full">
-                        <div id="barchartC" style="width: fit-content; height: fit-content;">
+                        <div id="barchartC" class="w-full">
                           <table class="table table-bordered">
                             <thead>
                                 <tr class="table-info">
@@ -147,7 +162,7 @@
                 </div>
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
                     <div class="p-5 text-gray-900 inline-flex w-full">
-                        <div id="barchartD" style="width: fit-content; height: fit-content;">
+                        <div id="barchartD" class="w-full">
                           <table class="table table-bordered">
                             <thead>
                                 <tr class="table-info">
@@ -176,6 +191,10 @@
       background-color: #48bb78;
     }
 </style>
+<!-- include charts assets -->
+<script src="{{ asset('charts/js/apexcharts.js') }}"></script>
+<!-- end include charts assets -->
+
 <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 <script type="text/javascript">
@@ -191,20 +210,14 @@
       $('#filter_form').submit();
     });
 
-    // // your code here
-    // let countAmericasAndCanada = 150;
-    // let countMiddleEastAndAfrica = 12;
-    // let countEurope = 111;
-    // let countAsiaAndPacific = 68;
-
-    // let submmitted = 1;
-    // let notsubmmitted = 0;
-    // let year_chosen = '24';
-
+    // your code here
+    let baArrayCountry = [];
+    let baArrayType = [];
+    let baArrayTotal = [];
+    let bbArray = [];
+    let bcArray = [];
+    let bdArray = [];
   
-
-
-
     google.charts.load('current', {
       'packages':['geochart','corechart','bar'],
       // 'mapsApiKey': 'AIzaSyDK2Grm03U3YrQScpSPB500wogvnlntydQ' //my API key
@@ -213,7 +226,7 @@
     // google.charts.setOnLoadCallback(drawRegionsMap);
     google.charts.setOnLoadCallback(drawRegionsMapSubmissions);
     google.charts.setOnLoadCallback(drawProjectType);
-   
+    // google.charts.setOnLoadCallback(drawBarChartA);
 
     get_data({{$region}});
 
@@ -258,7 +271,10 @@
        
           $('#tab_project_type').html('');
           $.each(response.project_type , function(index, val) {
-            $('#tab_project_type').append('<tr><td>'+val.country+'</td><td>'+val.project_type+'</td><td align="center">'+val.total+'</td></tr>');          
+            $('#tab_project_type').append('<tr><td>'+val.country+'</td><td>'+val.project_type+'</td><td align="center">'+val.total+'</td></tr>');
+              baArrayCountry.push(val.country);        
+              baArrayType.push(val.project_type);        
+              baArrayTotal.push(val.total);        
           });
         
 
@@ -277,6 +293,112 @@
             $('#tab_qtr').append('<tr><td>'+val.quarter+'</td><td align="center">'+val.total+'</td></tr>');
           });
 
+
+          // pass data to bar chart A
+          const barOptionsA = {
+            series: [
+              {
+                name: [baArrayType[0]],
+                data: [baArrayTotal[0]],
+                color: "#FDBA8C",
+              },
+              {
+                name: [baArrayType[1]],
+                data: [baArrayTotal[1]],
+                color: "#ff8944",
+              },
+              {
+                name: [baArrayType[2]],
+                data: [baArrayTotal[2]],
+                color: "#5b92ff",
+              }
+            ],
+            chart: {
+              sparkline: {
+                enabled: false,
+              },
+              type: "bar",
+              width: "100%",
+              height: 400,
+              toolbar: {
+                show: false,
+              }
+            },
+            fill: {
+              opacity: 1,
+            },
+            plotOptions: {
+              bar: {
+                horizontal: true,
+                columnWidth: "100%",
+                borderRadiusApplication: "end",
+                borderRadius: 6,
+                dataLabels: {
+                  position: "top",
+                },
+              },
+            },
+            legend: {
+              show: true,
+              position: "bottom",
+            },
+            dataLabels: {
+              enabled: false,
+            },
+            tooltip: {
+              shared: true,
+              intersect: false,
+              formatter: function (value) {
+                return "" + value
+              }
+            },
+            xaxis: {
+              labels: {
+                show: true,
+                style: {
+                  fontFamily: "Inter, sans-serif",
+                  cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                },
+                formatter: function(value) {
+                  return "" + value
+                }
+              },
+              categories: [baArrayCountry[0], baArrayCountry[1], baArrayCountry[2]],
+              axisTicks: {
+                show: false,
+              },
+              axisBorder: {
+                show: false,
+              },
+            },
+            yaxis: {
+              labels: {
+                show: true,
+                style: {
+                  fontFamily: "Inter, sans-serif",
+                  cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
+                }
+              }
+            },
+            grid: {
+              show: true,
+              strokeDashArray: 4,
+              padding: {
+                left: 2,
+                right: 2,
+                top: -20
+              },
+            },
+            fill: {
+              opacity: 1,
+            }
+          }
+
+          if(document.getElementById("bar-chart") && typeof ApexCharts !== 'undefined') {
+            const bachart = new ApexCharts(document.getElementById("bar-chart"), barOptionsA);
+            bachart.render();
+          }
+
         }
       });
     }
@@ -293,7 +415,41 @@
         chart.draw(data, options);
     }
 
-    
+    // 
 
+    // function drawBarChartA(year) {
+
+    //     var data = google.visualization.arrayToDataTable([
+    //       ['Data per Quarters', 'Americas & Canada', 'Europe', 'M.E. & Africa', 'Asia & Pacific'],
+    //       ['1st Quarter', barchart1AC, barchart1Eu, barchart1MA, barchart1AP],
+    //       ['2nd Quarter', barchart2AC, barchart2Eu, barchart2MA, barchart2AP],
+    //       ['3rd Quarter', barchart3AC, barchart3Eu, barchart3MA, barchart3AP],
+    //       ['4th Quarter', barchart4AC, barchart4Eu, barchart4MA, barchart4AP]
+    //     ]);
+
+    //     var options = {
+    //         width: 550,
+    //         height: 400,
+    //         legend: { position: 'top', maxLines: 4 },
+    //         bar: { groupWidth: '75%' },
+    //         isStacked: true,
+    //         chart: {
+    //         title: 'Accomplishment Reports Submitted',
+    //             subtitle: 'Based on most recent and previous reports data'
+    //         },
+    //         series: {
+    //             0:{color:'green'},
+    //             1:{color:'yellow'},
+    //             2:{color:'blue'},
+    //             3:{color:'orange'},
+    //         }
+    //     };
+
+        // var barchart = new google.charts.Bar(document.getElementById('barchartA'));
+        // materialChart.draw(data, options);
+        // barchart.draw(data, google.charts.Bar.convertOptions(options));
+    // }
+
+    
 
 </script>

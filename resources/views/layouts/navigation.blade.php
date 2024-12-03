@@ -30,7 +30,7 @@
                         </x-sub-nav-link>
                       </li>
                       <li>
-                        <x-sub-nav-link :href="route('dashboard.regional')" :active="request()->routeIs('dashboard-regional')" class="text-gray-400">
+                        <x-sub-nav-link :href="route('dashboard.regional')" :active="request()->routeIs('dashboard.regional')" class="text-gray-400">
                             Regions
                         </x-sub-nav-link>
                       </li>
