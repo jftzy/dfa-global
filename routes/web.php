@@ -17,9 +17,9 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     // Dashboard Routing
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/dashboard2/{yr?}', [DashboardController::class, 'index2'])->name('dashboard2');
-    Route::get('/dashboard/data-per-country', [DashboardController::class, 'get_data_per_country'])->name('dashboard.data');
+    // Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/{yr?}', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard-data/data-per-country', [DashboardController::class, 'get_data_per_country'])->name('dashboard.data');
 
     // Profile Routing
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

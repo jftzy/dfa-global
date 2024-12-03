@@ -8,7 +8,7 @@ use DB;
 
 class DashboardController extends Controller
 {
-    public function index() {
+    public function indexOld() {
 
         // 1st Quarter
         $barchart1AC = DB::table('accomplishments')->where('accomplishments.year', date('Y'))
@@ -163,7 +163,7 @@ class DashboardController extends Controller
                     ));
     }
 
-    public function index2($yr = null) {
+    public function index($yr = null) {
         $year = $yr ?? date('Y');
         $data = DB::table('accomplishments')->where('accomplishments.year', $year)
                                         ->select('countries.name as country','regions.name as region',DB::raw('count(accomplishments.id) as total'))
@@ -177,7 +177,7 @@ class DashboardController extends Controller
             $r.="['".$d->country."', ".$d->total."],";
         }
         $r = rtrim($r,",");
-        return view('dashboard2',compact('r','year'));
+        return view('dashboard',compact('r','year'));
     }
 
     public function get_data_per_country() {
