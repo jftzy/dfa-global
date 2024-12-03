@@ -26,7 +26,7 @@
                     <x-icons.icon-globe class="h-12 w-12 mr-2"></x-icons.icon-globe>
                     <div class="flex flex-col">
                         <p class="text-lg font-bold">
-                            Geographical Statistics
+                            Geographical Statistics per Country
                         </p>
                         <small class="text-sm text-gray-500">Showing global map of cutural activities accross the selected regions.</small>
                     </div>
@@ -37,21 +37,21 @@
                     <div class="inline-flex items-center">
                         <form class="max-w-sm mx-1">
                           <select id="year" name="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                            <option value="0" selected>Choose a year</option>
-                            <option value="22">2022</option>
-                            <option value="23">2023</option>
-                            <option value="24">2024</option>
+                            <option value="" selected>Choose year</option>
+                            @for($y = 2024; $y >= 2020; $y--)
+                            <option value="{{$y}}" @if($y == $year) selected @endif>{{$y}}</option>
+                            @endfor
                           </select>
                         </form>
 
-                        <button id="totalCA" data-dropdown-toggle="totalCAdropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mx-1" type="button">
+                        <button id="totalCA" data-dropdown-toggle="totalCAdropdown" class=" hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mx-1" type="button">
                             <x-icons.icon-file-lines class="h-4 w-4 mr-2"></x-icons.icon-file-lines>
                             Total Cultural Activity<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
                         </svg>
                         </button>
 
-                        <button id="projectType" data-dropdown-toggle="projectTypedropdown" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mx-1" type="button">
+                        <button id="projectType" data-dropdown-toggle="projectTypedropdown" class=" hidden text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-xs px-3 py-2.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 mx-1" type="button">
                             <x-icons.icon-folder class="h-4 w-4 mr-2"></x-icons.icon-folder>
                             Project Type<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
@@ -340,6 +340,11 @@
 <script type="text/javascript">
 
     // your code here
+    $('#year').on('change', function() {
+      //console.log( this.value );
+      window.location.href = "{{route('dashboard',':id')}}".replace(':id', this.value);
+    });
+
     let ptArray = [];
     let pcArray = [];
     let fppArray = [];
@@ -352,6 +357,7 @@
 
     // google.charts.setOnLoadCallback(drawRegionsMap);
     google.charts.setOnLoadCallback(drawRegionsMapSubmissions);
+    google.charts.setOnLoadCallback(drawProjectType);
    
     get_data();
 
@@ -817,5 +823,17 @@
             document.querySelector('#lineTable_mode').style.display = 'none';
         }
     }
+
+    function drawProjectType(data){
+          var data = google.visualization.arrayToDataTable(data);
+            //console.log(data);
+            var options = {
+              title: 'Project Types',
+              is3D: true,
+            };
+
+            var chart = new google.visualization.PieChart(document.getElementById('chartProjectType'));
+            chart.draw(data, options);
+        }
 
 </script>
