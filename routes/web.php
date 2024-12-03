@@ -27,12 +27,18 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // Settings Routing
-    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
-    Route::post('/settings-upload', [SettingsController::class, 'upload'])->name('settings.upload');
+    Route::get('/settings-accomplishments', [SettingsController::class, 'accomplishments'])->name('settings.accomplishments');
+    Route::get('/settings-events', [SettingsController::class, 'events'])->name('settings.events');
+    Route::get('/settings-translations', [SettingsController::class, 'translations'])->name('settings.translations');
+    Route::post('/settings-upload-accomplishments', [SettingsController::class, 'uploadAccomplishments'])->name('settings.upload-accomplishments');
     Route::post('/settings-upload-events', [SettingsController::class, 'uploadEvents'])->name('settings.upload-events');
+    Route::post('/settings-upload-translations', [SettingsController::class, 'uploadTranslations'])->name('settings.upload-translations');
 
     // Reports Routing
-    Route::get('/reports', [ReportsController::class, 'index'])->name('reports.index');
+    Route::get('/reports-accomplishments', [ReportsController::class, 'accomplishments'])->name('reports.accomplishments');
+    Route::get('/reports-events', [ReportsController::class, 'events'])->name('reports.events');
+    Route::get('/reports-translations', [ReportsController::class, 'translations'])->name('reports.translations');
+    // Route::get('/reports/statistcs', [ReportsController::class, 'statsLoad'])->name('reports.statistcs');
 });
 
 require __DIR__.'/auth.php';
