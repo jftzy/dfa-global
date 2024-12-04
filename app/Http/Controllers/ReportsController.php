@@ -57,8 +57,21 @@ class ReportsController extends Controller
         //                             ELSE 0
         //                             END) AS is_onetime, *
         //                             FROM accomplishments`);
-
-        $stats = Accomplishment::all();
+        if(isset($_GET['year'])){
+            //$stats = Accomplishment::where('year',$_GET['year'])->where('region');
+            $stats = \DB::table('accomplishments')->where('accomplishments.year', $_GET['year'])->where('regions.id', $_GET['region'])
+                                        ->select('countries.name as country','regions.name as region','accomplishments.*')
+                                        ->leftjoin('countries', 'countries.id', 'country_id')
+                                        ->leftjoin('regions', 'regions.id', 'countries.region_id')                                        
+                                        ->get();
+        }
+        else{
+            $stats = \DB::table('accomplishments')
+                                        ->select('countries.name as country','regions.name as region','accomplishments.*')
+                                        ->leftjoin('countries', 'countries.id', 'country_id')
+                                        ->leftjoin('regions', 'regions.id', 'countries.region_id')->limit(20)->orderBy('id','desc')
+                                        ->get();
+        }
 
         return view('reports.accomplishments', compact('stats'));
 
