@@ -31,22 +31,31 @@
 		    </label>
 		</div>
 	</x-slot>
-	<form class="max-w-sm mx-1">
-		Filters:
-		<select id="region" name="region" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-			<option value="" selected>Choose Region</option>
-			@foreach(\App\Models\Region::get() as $r)
-			<option value="{{$r->id}}">{{$r->name}}</option>
-			@endforeach
-		</select>
-		<select id="year" name="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-			<option value="" selected>Choose Year</option>
-				@for($y = 2024; $y >= 2020; $y--)
-				<option value="{{$y}}">{{$y}}</option>
-				@endfor
-		</select>
-		<button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Submit</button>
-	</form>
+
+	<div class="border-b border-gray-300 shadow rounded p-4">
+		<form class="max-w-sm mx-1 inline-flex items-center gap-4">
+		<span class="text-sm font-bold- pl-2 text-gray-700">
+			Filters:
+		</span>
+			<select id="region" name="region" class="min-w-64 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+				<option value="" selected>Choose Region</option>
+				@foreach(\App\Models\Region::get() as $r)
+				<option value="{{$r->id}}">{{$r->name}}</option>
+				@endforeach
+			</select>
+			<select id="year" name="year" class="min-w-64 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+				<option value="" selected>Choose Year</option>
+					@for($y = 2024; $y >= 2020; $y--)
+					<option value="{{$y}}">{{$y}}</option>
+					@endfor
+			</select>
+			<button type="submit" class="min-w-32 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 me-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 inline-flex items-center gap-2">
+				<x-icons.icon-indent></x-icons.icon-indent>
+				Submit
+			</button>
+		</form>
+	</div>
+
 	<div x-data="{}">
 		<div class="w-full p-4 data-table-container" id="interactive-table">
 			<table id="stats_table" class="display cell-border compact hover stripe">
