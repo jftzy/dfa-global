@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\Accomplishment;
+use App\Models\Translation;
 use App\Models\CulturalEventsAndTargetAudiences;
 use App\Http\Controllers\Controller;
 
@@ -25,7 +26,16 @@ class ReportsController extends Controller
 
     public function eventsLoad() {
 
-        $data = CulturalEventsAndTargetAudiences::all();
+        $data = CulturalEventsAndTargetAudiences::orderBy('created_at', 'DESC')->get();
+
+        return response()->json([
+            'data' => $data
+        ], 200);
+    }
+
+    public function translationsLoad() {
+
+        $data = Translation::orderBy('created_at', 'DESC')->get();
 
         return response()->json([
             'data' => $data
