@@ -10,3 +10,4 @@ Route::get('/user', function (Request $request) {
 
 // reports routes call
 Route::get('statistics', [ReportsController::class, 'statsLoad']);
+Route::get('events', [ReportsController::class, 'eventsLoad']);

@@ -64,10 +64,11 @@
                             Events
                         </x-sub-nav-link>
                       </li>
-                      <li>
+                      <li class="relative">
                         <x-sub-nav-link :href="route('reports.translations')" :active="request()->routeIs('reports-translations')" class="text-gray-400">
                             Translations
                         </x-sub-nav-link>
+                        <span class="absolute -right-4 top-2.5 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Beta</span>
                       </li>
                 </ul>
             </div>
@@ -99,10 +100,11 @@
                             Events
                         </x-sub-nav-link>
                       </li>
-                      <li>
+                      <li class="relative">
                         <x-sub-nav-link :href="route('settings.translations')" :active="request()->routeIs('settings-translations')" class="text-gray-400">
                             Translations
                         </x-sub-nav-link>
+                        <span class="absolute -right-4 top-2.5 bg-blue-100 text-blue-800 text-xs font-medium me-2 px-2.5 py-0.5 rounded dark:bg-blue-900 dark:text-blue-300">Beta</span>
                       </li>
                 </ul>
             </div>

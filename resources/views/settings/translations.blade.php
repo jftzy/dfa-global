@@ -27,7 +27,9 @@
 
 			<div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg mt-4 shadow md:flex-row transition ease-in-out delay-150" :class="upload_form_literatures ? 'block' : 'hidden -translate-y-14 z-[-999]' ">
 			    <div class="flex flex-col justify-between p-4 leading-normal h-full w-full">
-			    	<p class="mb-3 font-normal text-xs text-gray-500 dark:text-gray-400">Coming Soon..</p>
+			    	<div class="w-full inline-flex items-center justify-center bg-white">
+			    		<img src="{{ asset('imgs/coming-soon.jpg') }}" class="max-w-[40%] bg-cover">
+			    	</div>
 			    </div>
 			</div>
 					    

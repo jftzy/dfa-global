@@ -133,7 +133,7 @@ class SettingsController extends Controller
         }
 
         // return a response
-        return redirect('settings.events')->with('success', 'Data uploaded successfully');
+        return redirect('settings-events')->with('success', 'Data uploaded successfully');
     }
 
     public function translations() {

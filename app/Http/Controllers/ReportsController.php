@@ -65,7 +65,9 @@ class ReportsController extends Controller
     }
 
     public function events() {
-        return view('reports.events');
+        $events = CulturalEventsAndTargetAudiences::all();
+
+        return view('reports.events', compact('events'));
     }
 
     public function translations() {

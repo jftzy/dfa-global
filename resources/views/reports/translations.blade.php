@@ -32,4 +32,8 @@
 		</div>
 	</x-slot>
 
+	<div class="w-full inline-flex items-center justify-center bg-white min-h-screen">
+		<img src="{{ asset('imgs/coming-soon.jpg') }}" class="max-w-[40%] bg-cover" style="transform: translate(-70px, -130px);">
+	</div>
+
 </x-app-layout>

@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\Accomplishment;
+use App\Models\CulturalEventsAndTargetAudiences;
 use App\Http\Controllers\Controller;
 
 class ReportsController extends Controller
@@ -16,6 +17,15 @@ class ReportsController extends Controller
                         from accomplishments as a
                         inner join countries as c on c.id = a.country_id
                         where c.id = a.country_id ORDER BY a.created_at DESC');
+
+        return response()->json([
+            'data' => $data
+        ], 200);
+    }
+
+    public function eventsLoad() {
+
+        $data = CulturalEventsAndTargetAudiences::all();
 
         return response()->json([
             'data' => $data
