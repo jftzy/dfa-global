@@ -158,10 +158,11 @@
         	{ data: "other_stakeholders" },
         	{ data: "title_of_the_event" },
         	{ data: "short_description" },
+        	{ data: "short_description" },
         	{ 
-        		data: {"from": "date_from", "to": "date_to"},
+        		data: {"date_from": "date_from", "date_from": "date_to"},
         		render: function(data, type, row) {
-        			return data.from + " to " + data.to;
+        			return data.date_from + " to " + data.date_from;
         		}
         	}
      	],
