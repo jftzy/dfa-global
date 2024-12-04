@@ -357,7 +357,7 @@
 
     // google.charts.setOnLoadCallback(drawRegionsMap);
     google.charts.setOnLoadCallback(drawRegionsMapSubmissions);
-    //google.charts.setOnLoadCallback(drawProjectType);
+    google.charts.setOnLoadCallback(drawProjectType);
    
     get_data();
 
@@ -399,14 +399,9 @@
         },
         success: function(response) {
           //console.log(response);
-
-          project_type_graph_data = [];
           $('#tab_project_type').html('');
           $.each(response.project_type , function(index, val) {
             $('#tab_project_type').append('<tr><td>'+val.project_type+'</td><td>'+val.total+'</td></tr>');
-            project_type_graph_data.push({
-              x: val.project_type, y: val.total
-            });
             ptArray.push(val.total);
           });
 
@@ -430,18 +425,17 @@
 
           console.log(ptArray);
           // pass data to column chart A
-          // [
-          //         { x: "Flagship", y: ptArray[0] },
-          //         { x: "One Time", y: ptArray[1] },
-          //         { x: "Recurring", y: ptArray[2] },
-          //       ]
           const columnOptions = {
             colors: ["#1A56DB", "#FDBA8C"],
             series: [
               {
                 name: "Project Type Total",
                 color: "#1A56DB",
-                data: project_type_graph_data,
+                data: [
+                  { x: "Flagship", y: ptArray[0] },
+                  { x: "One Time", y: ptArray[1] },
+                  { x: "Recurring", y: ptArray[2] },
+                ],
               },
             ],
             chart: {
@@ -753,27 +747,25 @@
 
 
           // below is charts code configs
-          //if (document.getElementById("pie-chart") && typeof ApexCharts !== 'undefined') {
+          if (document.getElementById("pie-chart") && typeof ApexCharts !== 'undefined') {
             const pchart = new ApexCharts(document.getElementById("pie-chart"), getChartOptions());
             pchart.render();
-          //}
+          }
 
-          //if(document.getElementById("bar-chart") && typeof ApexCharts !== 'undefined') {
+          if(document.getElementById("bar-chart") && typeof ApexCharts !== 'undefined') {
             const bchart = new ApexCharts(document.getElementById("bar-chart"), barOptions);
             bchart.render();
-          //}
+          }
 
-          //if(document.getElementById("column-chart") && typeof ApexCharts !== 'undefined') {
+          if(document.getElementById("column-chart") && typeof ApexCharts !== 'undefined') {
             const cchart = new ApexCharts(document.getElementById("column-chart"), columnOptions);
             cchart.render();
-          //}
+          }
 
-          //if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
+          if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
             const lchart = new ApexCharts(document.getElementById("area-chart"), lineOptions);
             lchart.render();
-          //}
-
-          
+          }
           // end chart configs
 
         }
@@ -832,7 +824,6 @@
         }
     }
 
-    /*
     function drawProjectType(data){
           var data = google.visualization.arrayToDataTable(data);
             //console.log(data);
@@ -844,5 +835,5 @@
             var chart = new google.visualization.PieChart(document.getElementById('chartProjectType'));
             chart.draw(data, options);
         }
-*/
+
 </script>
