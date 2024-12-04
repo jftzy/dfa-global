@@ -61,7 +61,7 @@ class SettingsController extends Controller
             $country = new Country;
 
             // call convert method of month
-            $month_converted = $this.monthConvertion($request['month']);
+            $month_converted = $this->monthConvertion($request['month']);
             
             // check country id
             $countryId = Country::where('name', 'like', $report['country'])->first();
@@ -84,7 +84,7 @@ class SettingsController extends Controller
         }
 
         // return a response
-        return redirect('settings')->with('success', 'Data uploaded successfully');
+        return redirect('settings-accomplishments')->with('success', 'Data uploaded successfully');
     }
 
     public function events() {
@@ -133,7 +133,7 @@ class SettingsController extends Controller
         }
 
         // return a response
-        return redirect('settings')->with('success', 'Data uploaded successfully');
+        return redirect('settings-events')->with('success', 'Data uploaded successfully');
     }
 
     public function translations() {

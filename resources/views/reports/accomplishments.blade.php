@@ -31,7 +31,22 @@
 		    </label>
 		</div>
 	</x-slot>
-
+	<form class="max-w-sm mx-1">
+		Filters:
+		<select id="region" name="region" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+			<option value="" selected>Choose Region</option>
+			@foreach(\App\Models\Region::get() as $r)
+			<option value="{{$r->id}}">{{$r->name}}</option>
+			@endforeach
+		</select>
+		<select id="year" name="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+			<option value="" selected>Choose Year</option>
+				@for($y = 2024; $y >= 2020; $y--)
+				<option value="{{$y}}">{{$y}}</option>
+				@endfor
+		</select>
+		<button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Submit</button>
+	</form>
 	<div x-data="{}">
 		<div class="w-full p-4 data-table-container" id="interactive-table">
 			<table id="stats_table" class="display cell-border compact hover stripe">
@@ -51,11 +66,28 @@
                         <th><span class="flex items-center">Cultural Domains</span></th>
 			        </tr>
 			    </thead>
-			    <!-- <tbody>
-			        <tbody>
-			        	
-			        </tbody>
-			    </tbody> -->
+			    <tbody>
+			        
+						@forelse($stats as $d)
+			        	<tr>
+							<td>{{$d->country}}</td>
+							<td>{{$d->title}}</td>
+							<td>{{$d->month}}</td>
+							<td>{{$d->year}}</td>
+							<td>{{$d->quarter}}</td>
+							<td>{{$d->project_type}}</td>
+							<td>{{$d->project_classification}}</td>
+							<td>{{$d->foreign_policy_pillar}}</td>
+							<td>{{$d->target_audience}}</td>
+							<td>{{$d->strategic_plan}}</td>
+							<td>{{$d->diplomacy}}</td>
+							<td>{{$d->cultural_domains}}</td>
+						
+						</tr>
+						@empty
+						@endforelse
+			        
+			    </tbody>
 			    <tfoot>
 			    	
 			    </tfoot>
@@ -200,46 +232,13 @@
 	    	"zeroRecords": "No Data Found.",
 	    	"ordering": true, 
 	    	"bLengthChange" : false, 
-	    	"pageLength": 5,
-	    	scrollX: true,
-	    	paging: true,
-	         "order": [[ 2, 'desc' ]],
-	         "searching": true,
-	         "lengthMenu": [
-	             [5, 10, 15, 25, -1],
-	             [5, 10, 15, 25, "All"] // change per page values here
-	        ],
+			paging: true,
+	    	pageLength: 10,
+	    	scrollX: true,	  
+				       
 	        dom: 'lBfrtip',
-	        buttons: [
-	                      // { extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Exportar a PDF</i>' },
-	                      { extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"> Exportar a CSV</i>' },
-	                      { extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"> Exportar a EXCEL</i>' },
-	                      'pageLength'
-	                  ],
-	        ajax: { url: '{{ ENV('APP_URL') }}/api/statistics', },
-            columns: [
-            	{ data: "country" },
-            	{ data: "title" },
-            	{ data: "month" },
-            	{ data: "year" },
-            	{ 
-            		data: "quarter",
-            		render: function(data, type, row) {
-            			return "Q" + data;
-            		}
-            	},
-            	{ data: "project_type" },
-            	{ data: "project_classification" },
-            	{ data: "foreign_policy_pillar" },
-            	{ data: "target_audience" },
-            	{ data: "strategic_plan" },
-            	{ data: "diplomacy" },
-            	{ data: "cultural_domains" }
-         	],
-	             error:  function(response){
-	                 console.log("ERROR",response);
-	             }
-	        });
+	        buttons: [ 'copy', 'excel', 'pdf' ]
+		});
 	});
 </script>
 

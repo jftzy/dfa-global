@@ -77,6 +77,33 @@
 					    
 		</div>
 
+		<hr class="mt-4" />
+
+		<div class="w-full p-6">
+			<div class="w-full">
+				<table id="events_table_preview" class="display cell-border compact hover stripe">
+				    <thead>
+				        <tr>
+				            <th><span class="flex items-center">Host Communities</span></th>
+	    		            <th><span class="flex items-center">Filipino Commmunities</span></th>
+	    		            <th><span class="flex items-center">Other Stakeholders</span></th>
+	    		            <th><span class="flex items-center">Event Title</span></th>
+	    		            <th><span class="flex items-center">Short Description</span></th>
+	    		            <th><span class="flex items-center">Date</span></th>
+				        </tr>
+				    </thead>
+				    <!-- <tbody>
+				        <tbody>
+				        	
+				        </tbody>
+				    </tbody> -->
+				    <tfoot>
+				    	
+				    </tfoot>
+				</table>
+			</div>
+		</div>
+
 	</div>
 
 </x-app-layout>
@@ -91,4 +118,44 @@
 	            }
 	        }))
 	    })
+
+	    //code here
+	    $('#events_table_preview').dataTable( {
+	    	"zeroRecords": "No Data Found.",
+	    	"ordering": true, 
+	    	"bLengthChange" : false, 
+	    	"pageLength": 5,
+	    	scrollX: true,
+	    	paging: true,
+	    	// "searching": true,
+	         // "order": [[ 2, 'desc' ]],
+	        //  "lengthMenu": [
+	        //      [5, 10, 15, 25, -1],
+	        //      [5, 10, 15, 25, "All"] // change per page values here
+	        // ],
+	        // dom: 'lBfrtip',
+	        // buttons: [
+	        //               // { extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Exportar a PDF</i>' },
+	        //               { extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"> Exportar a CSV</i>' },
+	        //               { extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"> Exportar a EXCEL</i>' },
+	        //               'pageLength'
+	        //           ],
+	        ajax: { url: '{{ ENV('APP_URL') }}/api/events', },
+            columns: [
+            	{ data: "host_communities" },
+            	{ data: "filipino_communities" },
+            	{ data: "other_stakeholders" },
+            	{ data: "title_of_the_event" },
+            	{ data: "short_description" },
+            	{ 
+            		data: {"from": "date_from", "to": "date_to"},
+            		render: function(data, type, row) {
+            			return data.from + " to " + data.to;
+            		}
+            	}
+         	],
+	             error:  function(response){
+	                 console.log("ERROR",response);
+	             }
+	        });
 </script>

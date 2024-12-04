@@ -1389,6 +1389,7 @@
                 "source": "https://github.com/laravel/sanctum"
             },
             "time": "2024-09-27T14:55:41+00:00"
+
         },
         {
             "name": "laravel/serializable-closure",
@@ -7971,5 +7972,5 @@
         "php": "^8.2"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.6.0"
 }
