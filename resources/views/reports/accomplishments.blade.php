@@ -105,7 +105,7 @@
 
 		<div class="w-full hidden" id="native-table">
 			<div class="w-full border border-gray-300 p-4 rounded-lg">
-				<div class="border text-center py-4 font-bold text-lg">DFA Cultural Diplomacy Framework <br /> 2023 Accomplishment Reports</div>
+				<div class="border text-center py-4 font-bold text-lg">DFA Cultural Diplomacy Framework <br /> Accomplishment Reports</div>
 				<table class="w-full">
 					<thead>
 						<tr>
