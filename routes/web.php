@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings-upload-translations', [SettingsController::class, 'uploadTranslations'])->name('settings.upload-translations');
 
     Route::post('/settings-store-accomplishments', [SettingsController::class, 'storeAccomplishments'])->name('settings.store-accomplishments');
+    Route::post('/settings-store-events', [SettingsController::class, 'storeEvents'])->name('settings.store-events');
+    Route::post('/settings-store-translations', [SettingsController::class, 'storeTranslations'])->name('settings.store-translations');
 
 
 
