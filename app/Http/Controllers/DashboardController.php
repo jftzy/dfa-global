@@ -260,7 +260,27 @@ class DashboardController extends Controller
   
             $project_type_qry->where('countries.region_id',$region->id)->where('accomplishments.year',$yr);
         $project_type = $project_type_qry->get();
-      
+        $pt_chart_data = [];
+        $country_data = ['Project Type per Country'];
+        foreach($project_type->unique('country') as $country){
+            array_push($country_data,$country->country);
+        }
+            foreach($project_type->unique('project_type') as $pt){
+                $sub_data=[$pt->project_type];
+                foreach($project_type->unique('country') as $country){
+                    $d = $project_type->where('country',$country->country)->where('project_type',$pt->project_type)->first();
+                    $total = 0;
+                    if(isset($d->total)) $total = $d->total;
+                    array_push($sub_data,$total);
+                }
+            
+                array_push($pt_chart_data,$sub_data);
+                
+            }
+  
+        array_unshift($pt_chart_data , $country_data);
+        $pt_chart_data = json_encode($pt_chart_data);
+        
 
         $project_classification_qry = DB::table('accomplishments')
             ->select('accomplishments.project_classification','countries.name as country',DB::raw('count(accomplishments.id) as total'))
@@ -270,6 +290,27 @@ class DashboardController extends Controller
      
             $project_classification_qry->where('countries.region_id',$region->id)->where('accomplishments.year',$yr);
         $project_classification = $project_classification_qry->get();
+
+        $pc_chart_data = [];
+        $country_data = ['Project Classification per Country'];
+        foreach($project_classification->unique('country') as $country){
+            array_push($country_data,$country->country);
+        }
+            foreach($project_classification->unique('project_classification') as $pt){
+                $sub_data=[$pt->project_classification];
+                foreach($project_classification->unique('country') as $country){
+                    $d = $project_classification->where('country',$country->country)->where('project_classification',$pt->project_classification)->first();
+                    $total = 0;
+                    if(isset($d->total)) $total = $d->total;
+                    array_push($sub_data,$total);
+                }
+            
+                array_push($pc_chart_data,$sub_data);
+                
+            }
+  
+        array_unshift($pc_chart_data , $country_data);
+        $pc_chart_data = json_encode($pc_chart_data);
       
 
         $foreign_policy_pillar_qry = DB::table('accomplishments')
@@ -286,6 +327,8 @@ class DashboardController extends Controller
             'project_classification' => $project_classification,
             'foreign_policy_pillar' => $foreign_policy_pillar,
             'qtr' => $qtr,
+            'pt_chart' => $pt_chart_data,
+            'pc_chart' => $pc_chart_data
         ]);
       
     }

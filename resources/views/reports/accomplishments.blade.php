@@ -57,7 +57,7 @@
 	</div>
 
 	<div x-data="{}">
-		<div class="w-full p-4 data-table-container" id="interactive-table">
+		<div class="w-full p-4 data-table-container mt-[100px]" id="interactive-table">
 			<table id="stats_table" class="display cell-border compact hover stripe">
 			    <thead>
 			        <tr>
@@ -243,7 +243,7 @@
 	    	"bLengthChange" : false, 
 			paging: true,
 	    	pageLength: 10,
-	    	scrollX: true,	  
+	    	scrollX: true,
 				       
 	        dom: 'lBfrtip',
 	        buttons: [ 'copy', 'excel', 'pdf' ]

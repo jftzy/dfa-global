@@ -389,6 +389,11 @@
         chart.draw(data, options);
     }
 
+    function pickcolor(){      
+      message = ["#f73119","#edf719","#19f726","#19f4f7","#1956f7", "#ed19f7", "#f7193e"];
+      return message[Math.floor(Math.random() * message.length)];
+    }
+
     function get_data(country = null){
       $.ajax({
         url: "{{route('dashboard.data')}}",
@@ -400,17 +405,23 @@
         success: function(response) {
           //console.log(response);
           $('#tab_project_type').html('');
+          pt_chart = [];
           $.each(response.project_type , function(index, val) {
             $('#tab_project_type').append('<tr><td>'+val.project_type+'</td><td>'+val.total+'</td></tr>');
             ptArray.push(val.total);
+           // pr_chart.="{ x: "+val.project_type+", y: "+val.total+" },";
+           pt_chart.push({ x: val.project_type, color: pickcolor(), y: val.total });
           });
 
+          pc_chart = [];
           $('#tab_project_classification').html('');
           $.each(response.project_classification , function(index, val) {
             $('#tab_project_classification').append('<tr><td>'+val.project_classification+'</td><td>'+val.total+'</td></tr>');
             pcArray.push(val.total);
+            pc_chart.push({ name: val.project_classification, color: pickcolor(), data: [val.total] });
+           
           });
-
+          console.log(pc_chart);
           $('#tab_foreign_policy_pillar').html('');
           $.each(response.foreign_policy_pillar , function(index, val) {
             $('#tab_foreign_policy_pillar').append('<tr><td>'+val.foreign_policy_pillar+'</td><td>'+val.total+'</td></tr>');
@@ -423,7 +434,7 @@
             qtArray.push(val.total);
           });
 
-          console.log(ptArray);
+          //console.log(ptArray);
           // pass data to column chart A
           const columnOptions = {
             colors: ["#1A56DB", "#FDBA8C"],
@@ -431,11 +442,7 @@
               {
                 name: "Project Type Total",
                 color: "#1A56DB",
-                data: [
-                  { x: "Flagship", y: ptArray[0] },
-                  { x: "One Time", y: ptArray[1] },
-                  { x: "Recurring", y: ptArray[2] },
-                ],
+                data: pt_chart,
               },
             ],
             chart: {
@@ -484,7 +491,7 @@
               },
             },
             dataLabels: {
-              enabled: false,
+              enabled: true,
             },
             legend: {
               show: false,
@@ -513,25 +520,11 @@
             },
           }
 
+
+        
           // pass data to bar chart A
           const barOptions = {
-            series: [
-              {
-                name: "Cultural Heritage",
-                color: "#31C48D",
-                data: [pcArray[0]],
-              },
-              {
-                name: "Filipino Identity",
-                data: [pcArray[1]],
-                color: "#ff8944",
-              },
-              {
-                name: "Pop Culture",
-                data: [pcArray[2]],
-                color: "#5b92ff",
-              }
-            ],
+            series:pc_chart,
             chart: {
               sparkline: {
                 enabled: false,
@@ -747,25 +740,25 @@
 
 
           // below is charts code configs
-          if (document.getElementById("pie-chart") && typeof ApexCharts !== 'undefined') {
+          //if (document.getElementById("pie-chart") && typeof ApexCharts !== 'undefined') {
             const pchart = new ApexCharts(document.getElementById("pie-chart"), getChartOptions());
             pchart.render();
-          }
+          //}
 
-          if(document.getElementById("bar-chart") && typeof ApexCharts !== 'undefined') {
+          //if(document.getElementById("bar-chart") && typeof ApexCharts !== 'undefined') {
             const bchart = new ApexCharts(document.getElementById("bar-chart"), barOptions);
             bchart.render();
-          }
+          //}
 
-          if(document.getElementById("column-chart") && typeof ApexCharts !== 'undefined') {
+          //if(document.getElementById("column-chart") && typeof ApexCharts !== 'undefined') {
             const cchart = new ApexCharts(document.getElementById("column-chart"), columnOptions);
             cchart.render();
-          }
+          //}
 
-          if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
+          //if (document.getElementById("area-chart") && typeof ApexCharts !== 'undefined') {
             const lchart = new ApexCharts(document.getElementById("area-chart"), lineOptions);
             lchart.render();
-          }
+          //}
           // end chart configs
 
         }

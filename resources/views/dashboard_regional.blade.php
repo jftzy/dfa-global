@@ -179,7 +179,18 @@
                 </div>
             </div>
 
-            
+            <!-- Comprehensive Bar Chart -->
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
+                <div class="p-5 text-gray-900 inline-flex w-full">
+                    <div id="barchartA" style="width: fit-content; height: fit-content;"></div>
+                </div>
+            </div>
+
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
+                <div class="p-5 text-gray-900 inline-flex w-full">
+                    <div id="barchartB" style="width: fit-content; height: fit-content;"></div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -225,8 +236,8 @@
 
     // google.charts.setOnLoadCallback(drawRegionsMap);
     google.charts.setOnLoadCallback(drawRegionsMapSubmissions);
-    google.charts.setOnLoadCallback(drawProjectType);
-    // google.charts.setOnLoadCallback(drawBarChartA);
+    //google.charts.setOnLoadCallback(drawProjectType);
+    //google.charts.setOnLoadCallback(drawBarChartA);
 
     get_data({{$region}});
 
@@ -267,8 +278,9 @@
           region: region
         },
         success: function(response) {
-
-       
+      
+          pt_chart($.parseJSON(response.pt_chart));
+          pc_chart($.parseJSON(response.pc_chart));
           $('#tab_project_type').html('');
           $.each(response.project_type , function(index, val) {
             $('#tab_project_type').append('<tr><td>'+val.country+'</td><td>'+val.project_type+'</td><td align="center">'+val.total+'</td></tr>');
@@ -294,162 +306,49 @@
           });
 
 
-          // pass data to bar chart A
-          const barOptionsA = {
-            series: [
-              {
-                name: [baArrayType[0]],
-                data: [baArrayTotal[0]],
-                color: "#FDBA8C",
-              },
-              {
-                name: [baArrayType[1]],
-                data: [baArrayTotal[1]],
-                color: "#ff8944",
-              },
-              {
-                name: [baArrayType[2]],
-                data: [baArrayTotal[2]],
-                color: "#5b92ff",
-              }
-            ],
-            chart: {
-              sparkline: {
-                enabled: false,
-              },
-              type: "bar",
-              width: "100%",
-              height: 400,
-              toolbar: {
-                show: false,
-              }
-            },
-            fill: {
-              opacity: 1,
-            },
-            plotOptions: {
-              bar: {
-                horizontal: true,
-                columnWidth: "100%",
-                borderRadiusApplication: "end",
-                borderRadius: 6,
-                dataLabels: {
-                  position: "top",
-                },
-              },
-            },
-            legend: {
-              show: true,
-              position: "bottom",
-            },
-            dataLabels: {
-              enabled: false,
-            },
-            tooltip: {
-              shared: true,
-              intersect: false,
-              formatter: function (value) {
-                return "" + value
-              }
-            },
-            xaxis: {
-              labels: {
-                show: true,
-                style: {
-                  fontFamily: "Inter, sans-serif",
-                  cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
-                },
-                formatter: function(value) {
-                  return "" + value
-                }
-              },
-              categories: [baArrayCountry[0], baArrayCountry[1], baArrayCountry[2]],
-              axisTicks: {
-                show: false,
-              },
-              axisBorder: {
-                show: false,
-              },
-            },
-            yaxis: {
-              labels: {
-                show: true,
-                style: {
-                  fontFamily: "Inter, sans-serif",
-                  cssClass: 'text-xs font-normal fill-gray-500 dark:fill-gray-400'
-                }
-              }
-            },
-            grid: {
-              show: true,
-              strokeDashArray: 4,
-              padding: {
-                left: 2,
-                right: 2,
-                top: -20
-              },
-            },
-            fill: {
-              opacity: 1,
-            }
-          }
-
-          if(document.getElementById("bar-chart") && typeof ApexCharts !== 'undefined') {
-            const bachart = new ApexCharts(document.getElementById("bar-chart"), barOptionsA);
-            bachart.render();
-          }
+         
 
         }
       });
     }
 
-    function drawProjectType(data){
-      var data = google.visualization.arrayToDataTable(data);
-        //console.log(data);
+    function pt_chart(chart_data) {
+        //console.log(chart_data);
+        var data = google.visualization.arrayToDataTable(chart_data);
+
         var options = {
-          title: 'Project Types',
-          is3D: true,
+            width: 550,
+            height: 400,
+            legend: { position: 'top', maxLines: 4 },
+            bar: { groupWidth: '75%' },
+            isStacked: true,
+            chart: {
+            title: 'Project types',
+            }
         };
 
-        var chart = new google.visualization.PieChart(document.getElementById('chartProjectType'));
-        chart.draw(data, options);
+        var barchart = new google.charts.Bar(document.getElementById('barchartA'));
+        barchart.draw(data, google.charts.Bar.convertOptions(options));
     }
 
-    // 
+    function pc_chart(chart_data) {
+        //console.log(chart_data);
+        var data = google.visualization.arrayToDataTable(chart_data);
 
-    // function drawBarChartA(year) {
+        var options = {
+            width: 550,
+            height: 400,
+            legend: { position: 'top', maxLines: 4 },
+            bar: { groupWidth: '75%' },
+            isStacked: true,
+            chart: {
+            title: 'Project Classification',
+            subtitle: ''
+            }
+        };
 
-    //     var data = google.visualization.arrayToDataTable([
-    //       ['Data per Quarters', 'Americas & Canada', 'Europe', 'M.E. & Africa', 'Asia & Pacific'],
-    //       ['1st Quarter', barchart1AC, barchart1Eu, barchart1MA, barchart1AP],
-    //       ['2nd Quarter', barchart2AC, barchart2Eu, barchart2MA, barchart2AP],
-    //       ['3rd Quarter', barchart3AC, barchart3Eu, barchart3MA, barchart3AP],
-    //       ['4th Quarter', barchart4AC, barchart4Eu, barchart4MA, barchart4AP]
-    //     ]);
-
-    //     var options = {
-    //         width: 550,
-    //         height: 400,
-    //         legend: { position: 'top', maxLines: 4 },
-    //         bar: { groupWidth: '75%' },
-    //         isStacked: true,
-    //         chart: {
-    //         title: 'Accomplishment Reports Submitted',
-    //             subtitle: 'Based on most recent and previous reports data'
-    //         },
-    //         series: {
-    //             0:{color:'green'},
-    //             1:{color:'yellow'},
-    //             2:{color:'blue'},
-    //             3:{color:'orange'},
-    //         }
-    //     };
-
-        // var barchart = new google.charts.Bar(document.getElementById('barchartA'));
-        // materialChart.draw(data, options);
-        // barchart.draw(data, google.charts.Bar.convertOptions(options));
-    // }
-
-    
+        var barchartB = new google.charts.Bar(document.getElementById('barchartB'));
+        barchartB.draw(data, google.charts.Bar.convertOptions(options));
+    }
 
 </script>
