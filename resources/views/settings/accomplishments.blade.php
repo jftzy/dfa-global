@@ -18,10 +18,18 @@
 			        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Upload Statistical Data</h5>
 			        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Uploading statistical data typically involves transferring data sets that contain statistical information from a local device to the server. This process is crucial for data analysis, information sharing, reporting and storage.</p>
 
-			        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_upload">
-		                 <x-icons.icon-arrow-right-thick class="h-6 mr-3"></x-icons.icon-arrow-right-thick>
-		                 Get Started
-		            </button>
+			        
+
+    		        <div class="inline-flex items-center gap-4">
+	        	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_upload">
+	                         <x-icons.icon-arrow-right-thick class="h-6 mr-3"></x-icons.icon-arrow-right-thick>
+	                         Upload Data
+	                    </button>
+            	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_input">
+                             <x-icons.icon-edit class="h-6 mr-3"></x-icons.icon-edit>
+                             Input Data
+                        </button>
+    		        </div>
 			    </div>
 			</div>
 
@@ -88,6 +96,101 @@
 					</form>
 			    </div>
 			</div>
+
+			<div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg mt-4 shadow md:flex-row transition ease-in-out delay-150" :class="input_form ? 'block' : 'hidden -translate-y-14 z-[-999]' ">
+
+				@php
+					$countries = \App\Models\Country::all();
+				@endphp
+				
+				<form action="{{ route('settings.store-accomplishments') }}" method="POST" enctype="multipart/form-data" class="w-full p-4 inline-flex gap-5">
+					@csrf
+					<div class="w-1/2">
+
+						<label for="input_country" class="mt-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Country</label>
+						<select id="input_country" name="input_country" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+							@foreach($countries as $country)
+								<option value="{{ $country->id }}">{{ $country->name }}</option>
+							@endforeach
+						</select>
+
+					  <div class="mb-3 mt-3">
+					    <label for="input_title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
+					    <input type="text" id="input_title" name="input_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. National Womens Month" required />
+					  </div>
+
+					  <div class="mb-3">
+					    <label for="input_year" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Year</label>
+					    <input type="number" id="input_year" name="input_year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. 2024" required />
+					  </div>
+
+					  <label for="input_month" class="mt-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a month</label>
+					  <select id="input_month" name="input_month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					  	<option value="1" selected>January</option>
+					  	<option value="2">February</option>
+					  	<option value="3">March</option>
+					  	<option value="4">April</option>
+					  	<option value="5">May</option>
+					  	<option value="6">June</option>
+					  	<option value="7">July</option>
+					  	<option value="8">August</option>
+					  	<option value="9">September</option>
+					  	<option value="10">October</option>
+					  	<option value="11">November</option>
+					  	<option value="12">December</option>
+					  </select>
+
+					  <label for="input_project_type" class="mt-3 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Type</label>
+					  <select id="input_project_type" name="input_project_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					  	<option value="Flagship" selected>Flagship</option>
+					  	<option value="One Time">One Time</option>
+					  	<option value="Recurring">Recurring</option>
+					  </select>
+
+					  <label for="input_project_classification" class="mt-3 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Classification</label>
+					  <select id="input_project_classification" name="input_project_classification" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					  	<option value="Flagship" selected>Cultural Heritage</option>
+					  	<option value="One Time">Filipino Heritage</option>
+					  	<option value="Recurring">Pop Culture</option>
+					  </select>
+					  
+					    <button type="submit" class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+					  	  Submit
+					    </button>
+					</div>
+
+					<div class="w-1/2">
+					  <label for="input_foreign_policy_pillar" class="mt-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Foreign Policy Pillar</label>
+					  <select id="input_foreign_policy_pillar" name="input_foreign_policy_pillar" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					  	<option value="Cultural Promotion" selected>Cultural Promotion</option>
+					  	<option value="Economic Diplomacy">Economic Diplomacy</option>
+					  	<option value="National Security">National Security</option>
+					  </select>
+					  <div class="mb-3 mt-3">
+					    <label for="input_target_audience" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Target Audience</label>
+					    <input type="text" id="input_target_audience" id="input_target_audience" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. Filipino Cummunity"/>
+					  </div>
+
+					  <div class="mb-3">
+					    <label for="input_strategic_plan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Strategic Plan</label>
+					    <input type="text" id="input_strategic_plan" name="input_strategic_plan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter strategic plan.."/>
+					  </div>
+
+					  <div class="mb-3">
+					    <label for="input_diplomacy" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diplomacy</label>
+					    <input type="text" id="input_diplomacy" name="input_diplomacy" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter diplomacy"/>
+					  </div>
+
+					  <div class="mb-3">
+					    <label for="input_cultural_domains" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cultural Domains</label>
+					    <input type="text" id="input_cultural_domains" name="input_cultural_domains" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter cultural domain"/>
+					  </div>
+
+					</div>
+
+				</form>
+
+			</div>
 					    
 		</div>
 
@@ -132,9 +235,15 @@
 	document.addEventListener('alpine:init', () => {
 	        Alpine.data('options', () => ({
 	            upload_form: false,
+	            input_form: false,
 	            fileTitle: "",
 	            toggle_upload() {
 	                this.upload_form = ! this.upload_form;
+	                this.input_form = false;
+	            },
+	            toggle_input() {
+	                this.input_form = ! this.input_form;
+	                this.upload_form = false;
 	            }
 	        }))
 	    })

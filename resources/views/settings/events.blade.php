@@ -18,10 +18,17 @@
 			        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Upload Events and Audience Data</h5>
 			        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Uploading events and audience data involves contributing detailed information about various events and their respective audiences to a database or analytics platform. This process is crucial for organizations to track, analyze, and optimize their events and audience engagement strategies.</p>
 
-			        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_upload_events">
-		                 <x-icons.icon-arrow-right-thick class="h-6 mr-3"></x-icons.icon-arrow-right-thick>
-		                 Get Started
-		            </button>
+    		        <div class="inline-flex items-center gap-4">
+	        	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_upload_events">
+	                         <x-icons.icon-arrow-right-thick class="h-6 mr-3"></x-icons.icon-arrow-right-thick>
+	                         Upload Data
+	                    </button>
+            	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_input_events">
+                             <x-icons.icon-edit class="h-6 mr-3"></x-icons.icon-edit>
+                             Input Data
+                        </button>
+    		        </div>
+
 			    </div>
 			</div>
 
@@ -74,7 +81,65 @@
 					</form>
 			    </div>
 			</div>
-					    
+			
+			<div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg mt-4 shadow md:flex-row transition ease-in-out delay-150" :class="input_form_events ? 'block' : 'hidden -translate-y-14 z-[-999]' ">
+
+				<form action="{{ route('settings.store-events') }}" method="POST" enctype="multipart/form-data" class="w-full p-4 inline-flex gap-5">
+					@csrf
+					<div class="w-1/2">
+
+					  <div class="mb-3 mt-3">
+					    <label for="input_host_communities" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Host Communities</label>
+					    <input type="text" id="input_host_communities" name="input_host_communities" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter host communities" required />
+					  </div>
+
+					  <div class="mb-3 mt-3">
+					    <label for="input_filipino_communities" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Filipino Communities</label>
+					    <input type="text" id="input_filipino_communities" name="input_filipino_communities" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter filipino communities" required />
+					  </div>
+
+					  <div class="mb-3 mt-3">
+					    <label for="input_other_stakeholders" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Other Stakeholders</label>
+					    <input type="text" id="input_other_stakeholders" name="input_other_stakeholders" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter other stakeholders" required />
+					  </div>
+
+					    <button type="submit" class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+					  	  Submit
+					    </button>
+
+					</div>
+					<div class="w-1/2">
+
+					  <div class="mb-3 mt-3">
+					    <label for="input_event_title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Event Title</label>
+					    <input type="text" id="input_event_title" name="input_event_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter event title" required />
+					  </div>
+
+					  <div class="mt-3">
+					    <label for="input_short_description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Short Description</label>
+					    <input type="text" id="input_short_description" name="input_short_description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter short description" required />
+					  </div>
+
+					  <div class="inline-flex items-center gap-4">
+					  	<div class="w-1/2">
+					  		<div class="mb-3 mt-3">
+					  		  <label for="input_date_from" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date From</label>
+					  		  <input type="date" id="input_date_from" name="input_date_from" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+					  		</div>
+					  	</div>
+					  	<div class="w-1/2">
+					  		<div class="mb-3 mt-3">
+					  		  <label for="input_date_to" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date To</label>
+					  		  <input type="date" id="input_date_to" name="input_date_to" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required />
+					  		</div>
+					  	</div>
+					  </div>
+
+					</div>
+				</form>
+
+			</div>
+
 		</div>
 
 		<hr class="mt-4" />
@@ -112,9 +177,15 @@
 	document.addEventListener('alpine:init', () => {
 	        Alpine.data('options', () => ({
 	            upload_form_events: false,
+	            input_form_events: false,
 	            fileTitleEvents: "",
 	            toggle_upload_events() {
 	                this.upload_form_events = ! this.upload_form_events;
+	                this.input_form_events = false;
+	            },
+	            toggle_input_events() {
+	                this.input_form_events = ! this.input_form_events;
+	                this.upload_form_events = false;
 	            }
 	        }))
 	    })

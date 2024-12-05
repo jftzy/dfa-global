@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Accomplishment;
 use App\Models\Country;
 use App\Models\CulturalEventsAndTargetAudiences;
+use App\Models\Translation;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -140,8 +141,47 @@ class SettingsController extends Controller
         return view('settings.translations');
     }
 
-    public function uploadTanslations() {
-        // 
+    public function uploadTranslations(Request $request) {
+        
+        // validations
+        $request->validate([
+            'file_translations' => 'required|max:2048'
+        ]);
+
+        // need validation if filename already exist soon..
+
+        // store the file -- manipulate the data
+        $file = $request->file('file_translations');
+        $name = $file->getClientOriginalName();
+        $name = str_replace(',','_', $name);
+        $name = explode('.', $name);
+        $time = date('hidmy');
+        $nameStack = $name[0].$time;
+        $name = implode('.', [$nameStack,$name[1]]);
+        $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
+
+        // process data to database
+
+        $dateTime = date('Y-m-d H:i:s');
+        $reports = $this->csvToArray($file);
+
+        foreach($reports as $report) {
+            // call model instances every loop instances -- refactor if have any better solution.
+            $translations = new Translation;
+
+            // values
+            $translations['book_title'] = $report['book_title'];
+            $translations['author'] = $report['author'];
+            $translations['translator'] = $report['translator'];
+            $translations['language'] = $report['language'];
+            $translations['title_of_book_and_link'] = $report['title_of_book_and_link'];
+            $translations['year_of_translation'] = $report['year_of_translation'];
+            $translations['publisher'] = $report['publisher'];
+            $translations->save();
+        }
+
+        // return a response
+        return redirect('settings-translations')->with('success', 'Data uploaded successfully');
     }
 
     function csvToArray($filename = '', $delimiter = ',')
@@ -211,5 +251,69 @@ class SettingsController extends Controller
                 break;
         }
                 
+    }
+
+    public function storeAccomplishments(Request $request) {
+
+        // evaluate month
+        $monthSelected = $request['month'];
+        if ($monthSelected < 4) {
+            $monthSelected = '1';
+        } elseif ($monthSelected > 3 && $monthSelected < 7) {
+            $monthSelected = '2';
+        } elseif ($monthSelected > 6 && $monthSelected < 10) {
+            $monthSelected = '3';
+        } else {
+            $monthSelected = '4';
+        }
+
+        $accomplishment = new Accomplishment;
+        $accomplishment->country_id = $request['input_country'];
+        $accomplishment->title = $request['input_title'];
+        $accomplishment->year = $request['input_year'];
+        $accomplishment->month = $request['input_month'];
+        $accomplishment->quarter = $monthSelected;
+        $accomplishment->project_type = $request['input_project_type'];
+        $accomplishment->project_classification = $request['input_project_classification'];
+        $accomplishment->foreign_policy_pillar = $request['input_foreign_policy_pillar'];
+        $accomplishment->target_audience = $request['input_target_audience'];
+        $accomplishment->diplomacy = $request['input_diplomacy'];
+        $accomplishment->cultural_domains = $request['input_cultural_domains'];
+        $accomplishment->save();
+
+        return redirect('settings-accomplishments')->with('success', 'Data successfully saved.'); 
+    }
+
+    public function storeEvents(Request $request) {
+
+        $events = new CulturalEventsAndTargetAudiences;
+        // values
+        $events['host_communities'] = $request['input_host_communities'];
+        $events['filipino_communities'] = $request['input_filipino_communities'];
+        $events['other_stakeholders'] = $request['input_other_stakeholders'];
+        $events['title_of_the_event'] = $request['input_event_title'];
+        $events['short_description'] = $request['input_short_description'];
+        $events['date_from'] = $request['input_date_from'];
+        $events['date_to'] = $request['input_date_to'];
+        $events->save();
+
+        return redirect('settings-events')->with('success', 'Data successfully saved.'); 
+    }
+
+    public function storeTranslations(Request $request) {
+
+        $translations = new Translation;
+        // values
+        $translations['book_title'] = $request['input_book_title'];
+        $translations['author'] = $request['input_author'];
+        $translations['translator'] = $request['input_translator'];
+        $translations['language'] = $request['input_language'];
+        $translations['title_of_book_and_link'] = $request['input_title_of_book_and_link'];
+        $translations['year_of_translation'] = $request['input_year_of_translation'];
+        $translations['publisher'] = $request['input_publisher'];
+        $translations->save();
+
+        // return a response
+        return redirect('settings-translations')->with('success', 'Data uploaded successfully'); 
     }
 }

@@ -32,9 +32,16 @@ Route::middleware('auth')->group(function () {
     Route::get('/settings-accomplishments', [SettingsController::class, 'accomplishments'])->name('settings.accomplishments');
     Route::get('/settings-events', [SettingsController::class, 'events'])->name('settings.events');
     Route::get('/settings-translations', [SettingsController::class, 'translations'])->name('settings.translations');
+
     Route::post('/settings-upload-accomplishments', [SettingsController::class, 'uploadAccomplishments'])->name('settings.upload-accomplishments');
     Route::post('/settings-upload-events', [SettingsController::class, 'uploadEvents'])->name('settings.upload-events');
     Route::post('/settings-upload-translations', [SettingsController::class, 'uploadTranslations'])->name('settings.upload-translations');
+
+    Route::post('/settings-store-accomplishments', [SettingsController::class, 'storeAccomplishments'])->name('settings.store-accomplishments');
+    Route::post('/settings-store-events', [SettingsController::class, 'storeEvents'])->name('settings.store-events');
+    Route::post('/settings-store-translations', [SettingsController::class, 'storeTranslations'])->name('settings.store-translations');
+
+
 
     // Reports Routing
     Route::get('/reports-accomplishments', [ReportsController::class, 'accomplishments'])->name('reports.accomplishments');
