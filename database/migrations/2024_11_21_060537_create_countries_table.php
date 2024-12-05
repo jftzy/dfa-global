@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('region_id');
+            $table->unsignedInteger('region_id');
             $table->timestamps();
         });
     }

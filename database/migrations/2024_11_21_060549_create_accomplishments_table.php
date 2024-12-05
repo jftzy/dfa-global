@@ -13,11 +13,11 @@ return new class extends Migration
     {
         Schema::create('accomplishments', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('country_id');
+            $table->unsignedInteger('country_id');
             $table->text('title');
             $table->string('month');
-            $table->integer('year')->nullable();
-            $table->integer('quarter')->nullable();
+            $table->unsignedInteger('year')->nullable();
+            $table->unsignedInteger('quarter')->nullable();
             $table->string('project_type')->nullable();
             $table->string('project_classification')->nullable();
             $table->string('foreign_policy_pillar')->nullable();
