@@ -17,19 +17,24 @@
 			    <div class="flex flex-col justify-between p-4 leading-normal h-full">
 			        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Upload Statistical Data</h5>
 			        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Uploading statistical data typically involves transferring data sets that contain statistical information from a local device to the server. This process is crucial for data analysis, information sharing, reporting and storage.</p>
-
 			        
+			        <div class="inline-flex items-center justify-between">
+	    		        <div class="inline-flex items-center gap-4">
+		        	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_upload">
+		                         <x-icons.icon-arrow-right-thick class="h-6 mr-3"></x-icons.icon-arrow-right-thick>
+		                         Upload Data
+		                    </button>
+	            	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_input">
+	                             <x-icons.icon-edit class="h-6 mr-3"></x-icons.icon-edit>
+	                             Input Data
+	                        </button>
+	    		        </div>
+	        	        <a href="{{ asset('templates/template_accomplishments.csv') }}" class="inline-flex items-center px-6 py-2 mt-4 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-500 focus:ring-2 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 hover:scale-105">
+	                         <x-icons.icon-download class="h-6 mr-3"></x-icons.icon-download>
+	                         Download Template
+	                    </a>
+    		    	</div>
 
-    		        <div class="inline-flex items-center gap-4">
-	        	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_upload">
-	                         <x-icons.icon-arrow-right-thick class="h-6 mr-3"></x-icons.icon-arrow-right-thick>
-	                         Upload Data
-	                    </button>
-            	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_input">
-                             <x-icons.icon-edit class="h-6 mr-3"></x-icons.icon-edit>
-                             Input Data
-                        </button>
-    		        </div>
 			    </div>
 			</div>
 
@@ -109,24 +114,33 @@
 
 						<label for="input_country" class="mt-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Country</label>
 						<select id="input_country" name="input_country" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+								<option>-- Select Country --</option>
 							@foreach($countries as $country)
 								<option value="{{ $country->id }}">{{ $country->name }}</option>
 							@endforeach
 						</select>
-
 					  <div class="mb-3 mt-3">
 					    <label for="input_title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
 					    <input type="text" id="input_title" name="input_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. National Womens Month" required />
 					  </div>
 
 					  <div class="mb-3">
+
 					    <label for="input_year" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Year</label>
-					    <input type="number" id="input_year" name="input_year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. 2024" required />
+					    <!-- <input type="number" id="input_year" name="input_year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. 2024" required /> -->
+
+					    <select id="input_year" name="input_year" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					      <option value="" selected>-- Select a year --</option>
+					      @for($y = 2024; $y >= 2000; $y--)
+					      <option value="{{$y}}">{{$y}}</option>
+					      @endfor
+					    </select>
 					  </div>
 
 					  <label for="input_month" class="mt-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a month</label>
 					  <select id="input_month" name="input_month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-					  	<option value="1" selected>January</option>
+					  	<option selected>-- Select Month --</option>
+					  	<option value="1">January</option>
 					  	<option value="2">February</option>
 					  	<option value="3">March</option>
 					  	<option value="4">April</option>
@@ -142,14 +156,16 @@
 
 					  <label for="input_project_type" class="mt-3 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Type</label>
 					  <select id="input_project_type" name="input_project_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-					  	<option value="Flagship" selected>Flagship</option>
+					  	<option selected>-- Select Project Type --</option>
+					  	<option value="Flagship">Flagship</option>
 					  	<option value="One Time">One Time</option>
 					  	<option value="Recurring">Recurring</option>
 					  </select>
 
 					  <label for="input_project_classification" class="mt-3 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Classification</label>
 					  <select id="input_project_classification" name="input_project_classification" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-					  	<option value="Flagship" selected>Cultural Heritage</option>
+					  	<option selected>-- Select Project Classification --</option>
+					  	<option value="Flagship">Cultural Heritage</option>
 					  	<option value="One Time">Filipino Heritage</option>
 					  	<option value="Recurring">Pop Culture</option>
 					  </select>
@@ -162,7 +178,8 @@
 					<div class="w-1/2">
 					  <label for="input_foreign_policy_pillar" class="mt-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Foreign Policy Pillar</label>
 					  <select id="input_foreign_policy_pillar" name="input_foreign_policy_pillar" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-					  	<option value="Cultural Promotion" selected>Cultural Promotion</option>
+					  	<option selected>-- Select Foreign Policy Pillar --</option>
+					  	<option value="Cultural Promotion">Cultural Promotion</option>
 					  	<option value="Economic Diplomacy">Economic Diplomacy</option>
 					  	<option value="National Security">National Security</option>
 					  </select>
@@ -253,7 +270,8 @@
 	    //code here
 	    $('#stats_table_preview').dataTable( {
 	    	"zeroRecords": "No Data Found.",
-	    	"ordering": true, 
+	    	"ordering": true,
+	    	"order": [],
 	    	"bLengthChange" : false, 
 	    	"pageLength": 5,
 	    	scrollX: true,

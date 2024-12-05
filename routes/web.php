@@ -41,8 +41,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/settings-store-events', [SettingsController::class, 'storeEvents'])->name('settings.store-events');
     Route::post('/settings-store-translations', [SettingsController::class, 'storeTranslations'])->name('settings.store-translations');
 
-
-
     // Reports Routing
     Route::get('/reports-accomplishments', [ReportsController::class, 'accomplishments'])->name('reports.accomplishments');
     Route::get('/reports-events', [ReportsController::class, 'events'])->name('reports.events');

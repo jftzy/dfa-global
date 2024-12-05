@@ -133,7 +133,8 @@
     //code here
     $('#events_table').dataTable( {
     	"zeroRecords": "No Data Found.",
-    	"ordering": true, 
+    	"ordering": true,
+    	"order": [],
     	"bLengthChange" : false, 
     	"pageLength": 5,
     	scrollX: true,

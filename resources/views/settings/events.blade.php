@@ -18,15 +18,21 @@
 			        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Upload Events and Audience Data</h5>
 			        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Uploading events and audience data involves contributing detailed information about various events and their respective audiences to a database or analytics platform. This process is crucial for organizations to track, analyze, and optimize their events and audience engagement strategies.</p>
 
-    		        <div class="inline-flex items-center gap-4">
-	        	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_upload_events">
-	                         <x-icons.icon-arrow-right-thick class="h-6 mr-3"></x-icons.icon-arrow-right-thick>
-	                         Upload Data
-	                    </button>
-            	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_input_events">
-                             <x-icons.icon-edit class="h-6 mr-3"></x-icons.icon-edit>
-                             Input Data
-                        </button>
+    		        <div class="inline-flex items-center justify-between">
+        		        <div class="inline-flex items-center gap-4">
+		        	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_upload_events">
+		                         <x-icons.icon-arrow-right-thick class="h-6 mr-3"></x-icons.icon-arrow-right-thick>
+		                         Upload Data
+		                    </button>
+	            	        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_input_events">
+	                             <x-icons.icon-edit class="h-6 mr-3"></x-icons.icon-edit>
+	                             Input Data
+	                        </button>
+	                    </div>
+	        	        <a href="{{ asset('templates/template_events.csv') }}" class="inline-flex items-center px-6 py-2 mt-4 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-500 focus:ring-2 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 hover:scale-105">
+	                         <x-icons.icon-download class="h-6 mr-3"></x-icons.icon-download>
+	                         Download Template
+	                    </a>
     		        </div>
 
 			    </div>
@@ -194,6 +200,7 @@
 	    $('#events_table_preview').dataTable( {
 	    	"zeroRecords": "No Data Found.",
 	    	"ordering": true, 
+	    	"order": [],
 	    	"bLengthChange" : false, 
 	    	"pageLength": 5,
 	    	scrollX: true,

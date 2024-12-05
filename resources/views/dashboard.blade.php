@@ -154,7 +154,7 @@
 
 
                           <div id="column-chart"></div>
-                            <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between"></div>
+                          <div class="grid grid-cols-1 items-center border-gray-200 border-t dark:border-gray-700 justify-between"></div>
                         </div>
                         <!-- end column chart -->
 

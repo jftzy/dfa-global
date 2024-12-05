@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use DB;
 use Illuminate\Http\Request;
 use App\Models\Accomplishment;
+use App\Models\Translation;
 use App\Models\CulturalEventsAndTargetAudiences;
 use App\Http\Controllers\Controller;
 
@@ -78,12 +79,14 @@ class ReportsController extends Controller
     }
 
     public function events() {
-        $events = CulturalEventsAndTargetAudiences::all();
+        $events = CulturalEventsAndTargetAudiences::orderBy('created_at', 'DESC');
 
         return view('reports.events', compact('events'));
     }
 
     public function translations() {
-        return view('reports.translations');
+        $translations = Translation::orderBy('created_at', 'DESC');
+
+        return view('reports.translations', compact('translations'));
     }
 }

@@ -316,4 +316,5 @@ class SettingsController extends Controller
         // return a response
         return redirect('settings-translations')->with('success', 'Data uploaded successfully'); 
     }
+
 }
