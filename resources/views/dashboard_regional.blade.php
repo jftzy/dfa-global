@@ -1,5 +1,16 @@
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
 <x-app-layout>
+
+    <style type="text/css">
+        #pcTable_mode table tbody td,
+        #ptTable_mode table tbody td {
+            padding: 5px;
+            border-top: 1px solid #E5E7EB;
+            border-right: 1px solid #E5E7EB;
+            text-align: center;
+        }
+    </style>
+
     <x-slot name="header">
         <h2 class="font-semibold text-lg text-gray-800 leading-tight">
             {{ __('Welcome to Dashboard, ') }} {{ auth()->user()->name }} !
@@ -86,61 +97,100 @@
             <div class="w-full inline-flex gap-4">
                 <!-- Comprehensive Bar Chart -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
-                  
-                    <div class="p-5 text-gray-900 inline-flex w-full">
+                    <div class="p-4 text-gray-900 inline-flex w-full">
 
-                        <!-- bar chart -->
-                        <div class="hidden w-full bg-white rounded-lg dark:bg-gray-800" id="barChart_mode">
-                          <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
-                            <div class="flex items-center">
-                                <div class="flex items-center justify-between">
-                                  <div>
-                                    <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Data generated</p>
-                                  </div>
+                      <label for="switch_project_type" class="inline-flex items-center mb-5 cursor-pointer absolute top-7 right-5">
+                        <!-- toggle -->
+                        <input type="checkbox" id="switch_project_type" class="sr-only peer">
+                        <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                        <!-- label -->
+                        <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Switch View</span>
+                      </label>
+
+                      <div class="w-full bg-white rounded-lg dark:bg-gray-800" id="ptChart_mode">
+                        <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
+                          <div class="flex items-center">
+                              <div class="flex items-center justify-between">
+                                <div>
+                                  <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">Project Types per Region</h5>
+                                  <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Data generated</p>
                                 </div>
-                            </div>
+                              </div>
                           </div>
-                          <div id="bar-chart"></div>
                         </div>
-                        <!-- end bar chart -->
+                          <div id="barchartA"></div>
+                      </div>
                     
-                          <div class="w-full">
-                            <table class="table table-bordered w-full">
-                              <thead>
-                                  <tr class="table-info">
-                                    <th>Country</th>
-                                    <th>Project Type</th>
-                                    <th>Total</th>
-                                  </tr>
-                              </thead>
-                              <tbody id="tab_project_type">
-
-                              </tbody>
-                            </table>
-                          </div>
-                    </div>
-                </div>
-                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
-                    <div class="p-5 text-gray-900 inline-flex w-full">
-                        <div id="barchartB" class="w-full">
-                          <table class="table table-bordered">
+                      <div class="w-full hidden" id="ptTable_mode">
+                        <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">Project Types per Region</h5>
+                        <p class="text-sm font-normal text-gray-500 dark:text-gray-400 border-b border-gray-200 pb-4">Data generated</p>
+                        <div class="mt-4 border border-gray-300 shadow rounded-lg">
+                          <table class="table-auto table-bordered w-full">
                             <thead>
-                                <tr class="table-info">
-                                  <th>Country</th>
-                                  <th>Project Classification</th>
-                                  <th>Total</th>
+                                <tr>
+                                  <th class="p-2 border text-center">Country</th>
+                                  <th class="p-2 border text-center">Project Type</th>
+                                  <th class="p-2 border text-center">Total</th>
                                 </tr>
                             </thead>
-                            <tbody id="tab_project_classification">
+                            <tbody id="tab_project_type">
 
                             </tbody>
                           </table>
                         </div>
+                      </div>
+
                     </div>
                 </div>
-               
+
+                <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
+
+                  <div class="p-4 text-gray-900 inline-flex w-full">
+
+                    <label for="switch_project_classification" class="inline-flex items-center mb-5 cursor-pointer absolute top-7 right-5">
+                      <!-- toggle -->
+                      <input type="checkbox" id="switch_project_classification" class="sr-only peer">
+                      <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+                      <!-- label -->
+                      <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Switch View</span>
+                    </label>
+
+                    <div class="w-full bg-white rounded-lg dark:bg-gray-800" id="pcChart_mode">
+                      <div class="flex justify-between pb-4 mb-4 border-b border-gray-200 dark:border-gray-700">
+                        <div class="flex items-center">
+                            <div class="flex items-center justify-between">
+                              <div>
+                                <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">Project Classification per Region</h5>
+                                <p class="text-sm font-normal text-gray-500 dark:text-gray-400">Data generated</p>
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                        <div id="barchartB"></div>
+                    </div>
+                  
+                    <div class="w-full hidden" id="pcTable_mode">
+                      <h5 class="leading-none text-2xl font-bold text-gray-900 dark:text-white pb-1">Project Classification per Region</h5>
+                      <p class="text-sm font-normal text-gray-500 dark:text-gray-400 border-b border-gray-200 pb-4">Data generated</p>
+                      <div class="mt-4 border border-gray-300 shadow rounded-lg">
+                        <table class="table-auto table-bordered w-full">
+                          <thead>
+                              <tr>
+                                <th class="p-2 border text-center">Country</th>
+                                <th class="p-2 border text-center">Project Classification</th>
+                                <th class="p-2 border text-center">Total</th>
+                              </tr>
+                          </thead>
+                          <tbody id="tab_project_classification">
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+
+                  </div>
             </div>
-            <div class="w-full inline-flex gap-4">
+            <div class="hidden w-full inline-flex gap-4">
                 <!-- Comprehensive Bar Chart -->
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
                     <div class="p-5 text-gray-900 inline-flex w-full">
@@ -180,13 +230,13 @@
             </div>
 
             <!-- Comprehensive Bar Chart -->
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
+            <div class="hidden bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
                 <div class="p-5 text-gray-900 inline-flex w-full">
                     <div id="barchartA" style="width: fit-content; height: fit-content;"></div>
                 </div>
             </div>
 
-            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
+            <div class="hidden bg-white overflow-hidden shadow-sm sm:rounded-lg mt-4 w-6/12 inline-flex relative">
                 <div class="p-5 text-gray-900 inline-flex w-full">
                     <div id="barchartB" style="width: fit-content; height: fit-content;"></div>
                 </div>
@@ -317,10 +367,10 @@
         var data = google.visualization.arrayToDataTable(chart_data);
 
         var options = {
-            width: 550,
+            width: 470,
             height: 400,
             legend: { position: 'top', maxLines: 4 },
-            bar: { groupWidth: '75%' },
+            bar: { groupWidth: '65%' },
             isStacked: true,
             chart: {
             title: 'Project types',
@@ -336,10 +386,10 @@
         var data = google.visualization.arrayToDataTable(chart_data);
 
         var options = {
-            width: 550,
+            width: 470,
             height: 400,
             legend: { position: 'top', maxLines: 4 },
-            bar: { groupWidth: '75%' },
+            bar: { groupWidth: '65%' },
             isStacked: true,
             chart: {
             title: 'Project Classification',
@@ -349,6 +399,32 @@
 
         var barchartB = new google.charts.Bar(document.getElementById('barchartB'));
         barchartB.draw(data, google.charts.Bar.convertOptions(options));
+    }
+
+    document.getElementById('switch_project_type').onclick = function(){
+
+        let switcher = document.querySelector('#switch_project_type').checked;
+
+        if (switcher) {
+            document.querySelector('#ptChart_mode').style.display = 'none';
+            document.querySelector('#ptTable_mode').style.display = 'block';
+        } else {
+            document.querySelector('#ptChart_mode').style.display = 'block';
+            document.querySelector('#ptTable_mode').style.display = 'none';
+        }
+    }
+
+    document.getElementById('switch_project_classification').onclick = function(){
+
+        let switcher = document.querySelector('#switch_project_classification').checked;
+
+        if (switcher) {
+            document.querySelector('#pcChart_mode').style.display = 'none';
+            document.querySelector('#pcTable_mode').style.display = 'block';
+        } else {
+            document.querySelector('#pcChart_mode').style.display = 'block';
+            document.querySelector('#pcTable_mode').style.display = 'none';
+        }
     }
 
 </script>

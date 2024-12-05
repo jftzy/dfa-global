@@ -239,7 +239,8 @@
 	    //code here
 	    $('#stats_table').dataTable( {
 	    	"zeroRecords": "No Data Found.",
-	    	"ordering": true, 
+	    	"ordering": true,
+	    	"order": [],
 	    	"bLengthChange" : false, 
 			paging: true,
 	    	pageLength: 10,

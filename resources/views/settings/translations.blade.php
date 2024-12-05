@@ -18,7 +18,8 @@
 			        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Upload Literature Translations Data</h5>
 			        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Uploading literature translations data typically involves contributing information to a database that tracks translated works. These databases, like the Literary Translation and the Translation, serve as comprehensive resources for identifying translated books, their original languages, and the publishers involved.</p>
 
-			        <div class="inline-flex items-center gap-4">
+		         <div class="inline-flex items-center justify-between">
+    		        <div class="inline-flex items-center gap-4">
 				        <button class="inline-flex items-center w-36 px-3 py-2 mt-4 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-2 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 hover:scale-105" @click="toggle_upload_translations">
 			                 <x-icons.icon-arrow-right-thick class="h-6 mr-3"></x-icons.icon-arrow-right-thick>
 			                 Upload Data
@@ -28,6 +29,11 @@
 	                         Input Data
 	                    </button>
 			        </div>
+        	        <a href="{{ asset('templates/template_translations.csv') }}" class="inline-flex items-center px-6 py-2 mt-4 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-500 focus:ring-2 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 hover:scale-105">
+                         <x-icons.icon-download class="h-6 mr-3"></x-icons.icon-download>
+                         Download Template
+                    </a>
+			    </div>
 
 			    </div>
 			</div>
@@ -162,7 +168,8 @@
 	    //code here
 	    $('#translations_table_preview').dataTable( {
 	    	"zeroRecords": "No Data Found.",
-	    	"ordering": true, 
+	    	"ordering": true,
+	    	"order": [],
 	    	"bLengthChange" : false, 
 	    	"pageLength": 5,
 	    	scrollX: true,
