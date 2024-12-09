@@ -12,10 +12,10 @@
 		.w-full.p-4.data-table-container .dt-paging {
 			position: absolute;
 			right: 0;
-			bottom: -20px;
+			bottom: -25px;
 		}
-		.w-full.p-4.data-table-container .dt-info {
-			padding-top: 10px;
+		.w-full.p-4.data-table-container div#stats_table_info {
+			padding-top: 15px;
 		}
 	</style>
 
@@ -44,6 +44,7 @@
     		            <th><span class="flex items-center">Event Title</span></th>
     		            <th><span class="flex items-center">Short Description</span></th>
     		            <th><span class="flex items-center">Date</span></th>
+    		            <th><span class="flex items-center">Attached File</span></th>
 			        </tr>
 			    </thead>
 			    <!-- <tbody>
@@ -139,19 +140,15 @@
     	"pageLength": 5,
     	scrollX: true,
     	paging: true,
-         "order": [[ 2, 'desc' ]],
-         "searching": true,
-         "lengthMenu": [
-             [5, 10, 15, 25, -1],
-             [5, 10, 15, 25, "All"] // change per page values here
-        ],
+        "searching": true,
         dom: 'lBfrtip',
         buttons: [
-                      // { extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Exportar a PDF</i>' },
-                      { extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"> Exportar a CSV</i>' },
-                      { extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"> Exportar a EXCEL</i>' },
-                      'pageLength'
-                  ],
+			{ extend: 'copy', text: '<i class="fas fa-file-copy fa-1x" aria-hidden="true"> <b>Copy Data</b></i>' },
+			{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"><b>PDF</b></i>' },
+			{ extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"><b>CSV</b></i>' },
+			{ extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"><b>EXCEL</b></i>' },
+			'pageLength'
+		],
         ajax: { url: '{{ ENV('APP_URL') }}/api/events', },
         columns: [
         	{ data: "host_communities" },
@@ -164,6 +161,16 @@
         		data: {"date_from": "date_from", "date_from": "date_to"},
         		render: function(data, type, row) {
         			return data.date_from + " to " + data.date_from;
+        		}
+        	},
+        	{ 
+        		data: "file_events",
+        		render: function(data, type, row) {
+        			if(data !== null){
+        					return '<a href="storage/uploads/' + data + '" title="View File">'+ data +'</a>';
+        			    }else{
+        			        return ' ';
+        			    }
         		}
         	}
      	],

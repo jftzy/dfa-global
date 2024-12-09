@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('title_of_book_and_link')->nullable();
             $table->unsignedInteger('year_of_translation')->nullable();
             $table->string('publisher')->nullable();
+            $table->text('file_translations')->nullable();
             $table->timestamps();
         });
     }

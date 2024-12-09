@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('other_stakeholders')->nullable();
             $table->text('title_of_the_event');
             $table->text('short_description')->nullable();
+            $table->text('file_events')->nullable();
             $table->date('date_from');
             $table->date('date_to');
             $table->timestamps();

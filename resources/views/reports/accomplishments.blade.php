@@ -32,7 +32,7 @@
 		</div>
 	</x-slot>
 
-	<div class="border-b border-gray-300 shadow rounded p-4">
+	<div class="border-b border-gray-300 shadow rounded p-4 interactive-table">
 		<form class="max-w-sm mx-1 inline-flex items-center gap-4">
 		<span class="text-sm font-bold- pl-2 text-gray-700">
 			Filters:
@@ -57,7 +57,7 @@
 	</div>
 
 	<div x-data="{}">
-		<div class="w-full p-4 data-table-container mt-[100px]" id="interactive-table">
+		<div class="w-full p-4 data-table-container interactive-table">
 			<table id="stats_table" class="display cell-border compact hover stripe">
 			    <thead>
 			        <tr>
@@ -73,6 +73,7 @@
                         <th><span class="flex items-center">Strategic Plan</span></th>
                         <th><span class="flex items-center">Diplomacy</span></th>
                         <th><span class="flex items-center">Cultural Domains</span></th>
+                        <th><span class="flex items-center">Attached File</span></th>
 			        </tr>
 			    </thead>
 			    <tbody>
@@ -91,7 +92,7 @@
 							<td>{{$d->strategic_plan}}</td>
 							<td>{{$d->diplomacy}}</td>
 							<td>{{$d->cultural_domains}}</td>
-						
+							<td><a href="storage/uploads/{{$d->attached_file}}" title="View File">{{$d->attached_file}}</a></td>
 						</tr>
 						@empty
 						@endforelse
@@ -226,11 +227,11 @@
 		// functions
 		$("#is_interactive").on('change', function() {
 			if($("#is_interactive").is(':checked')) {
-			    $("#interactive-table").hide();  // unchecked
+			    $(".interactive-table").hide();  // unchecked
 			    $("#native-table").show();  // checked
 			    console.log("UN-checked!");
 			} else {
-			    $("#interactive-table").show();  // checked
+			    $(".interactive-table").show();  // checked
 			    $("#native-table").hide();  // unchecked
 			    console.log("checked!");
 			}
@@ -245,9 +246,14 @@
 			paging: true,
 	    	pageLength: 10,
 	    	scrollX: true,
-				       
 	        dom: 'lBfrtip',
-	        buttons: [ 'copy', 'excel', 'pdf' ]
+            buttons: [
+				{ extend: 'copy', text: '<i class="fas fa-file-copy fa-1x" aria-hidden="true"> <b>Copy Data</b></i>' },
+				{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"><b>PDF</b></i>' },
+				{ extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"><b>CSV</b></i>' },
+				{ extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"><b>EXCEL</b></i>' },
+				'pageLength'
+			],
 		});
 	});
 </script>

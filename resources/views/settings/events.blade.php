@@ -2,7 +2,7 @@
 	
 	<x-slot name="header">
 	    <h2 class="font-semibold text-lg text-gray-800 leading-tight">
-	        {{ __('Data Settings') }}
+	        {{ __('Data Settings - Events') }}
 	    </h2>
 	</x-slot>
 
@@ -29,7 +29,7 @@
 	                             Input Data
 	                        </button>
 	                    </div>
-	        	        <a href="{{ asset('templates/template_events.csv') }}" class="inline-flex items-center px-6 py-2 mt-4 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-500 focus:ring-2 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 hover:scale-105">
+	        	        <a href="{{ asset('templates/template_events.csv') }}" class="inline-flex items-center px-6 py-2 mt-4 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-500 focus:ring-2 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 hover:scale-105" :class="upload_form_events ? 'block' : 'hidden'">
 	                         <x-icons.icon-download class="h-6 mr-3"></x-icons.icon-download>
 	                         Download Template
 	                    </a>
@@ -126,7 +126,12 @@
 					    <input type="text" id="input_short_description" name="input_short_description" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter short description" required />
 					  </div>
 
-					  <div class="inline-flex items-center gap-4">
+					  <div class="mt-3">
+					    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="input_file_events">Upload File</label>
+					    <input class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="input_file_events" id="input_file_events" name="input_file_events" type="file" accept="text,.txt,.csv,.pdf,.word,.xlsx,.ppt">
+					  </div>
+
+					  <div class="inline-flex items-center gap-4 w-full">
 					  	<div class="w-1/2">
 					  		<div class="mb-3 mt-3">
 					  		  <label for="input_date_from" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Date From</label>
@@ -161,6 +166,7 @@
 	    		            <th><span class="flex items-center">Event Title</span></th>
 	    		            <th><span class="flex items-center">Short Description</span></th>
 	    		            <th><span class="flex items-center">Date</span></th>
+	    		            <th><span class="flex items-center">Attached File</span></th>
 				        </tr>
 				    </thead>
 				    <!-- <tbody>
@@ -205,19 +211,6 @@
 	    	"pageLength": 5,
 	    	scrollX: true,
 	    	paging: true,
-	    	// "searching": true,
-	         // "order": [[ 2, 'desc' ]],
-	        //  "lengthMenu": [
-	        //      [5, 10, 15, 25, -1],
-	        //      [5, 10, 15, 25, "All"] // change per page values here
-	        // ],
-	        // dom: 'lBfrtip',
-	        // buttons: [
-	        //               // { extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Exportar a PDF</i>' },
-	        //               { extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"> Exportar a CSV</i>' },
-	        //               { extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"> Exportar a EXCEL</i>' },
-	        //               'pageLength'
-	        //           ],
 	        ajax: { url: '{{ ENV('APP_URL') }}/api/events', },
             columns: [
             	{ data: "host_communities" },
@@ -229,6 +222,16 @@
             		data: {"date_from": "date_from", "date_from": "date_to"},
             		render: function(data, type, row) {
             			return data.date_from + " to " + data.date_from;
+            		}
+            	},
+            	{ 
+            		data: "file_events",
+            		render: function(data, type, row) {
+            			if(data !== null){
+            					return '<a href="storage/uploads/' + data + '" title="View File">'+ data +'</a>';
+            			    }else{
+            			        return ' ';
+            			    }
             		}
             	}
          	],

@@ -2,7 +2,7 @@
 	
 	<x-slot name="header">
 	    <h2 class="font-semibold text-lg text-gray-800 leading-tight">
-	        {{ __('Data Settings') }}
+	        {{ __('Data Settings - Translations') }}
 	    </h2>
 	</x-slot>
 
@@ -29,7 +29,7 @@
 	                         Input Data
 	                    </button>
 			        </div>
-        	        <a href="{{ asset('templates/template_translations.csv') }}" class="inline-flex items-center px-6 py-2 mt-4 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-500 focus:ring-2 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 hover:scale-105">
+        	        <a href="{{ asset('templates/template_translations.csv') }}" class="inline-flex items-center px-6 py-2 mt-4 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-500 focus:ring-2 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 hover:scale-105" :class="upload_form_translations ? 'block' : 'hidden'">
                          <x-icons.icon-download class="h-6 mr-3"></x-icons.icon-download>
                          Download Template
                     </a>
@@ -111,6 +111,11 @@
 						  <input type="text" id="input_publisher" name="input_publisher" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter publisher" required />
 						</div>
 
+						<div class="mt-3">
+						  <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="input_file_translations">Upload File</label>
+						  <input class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="input_file_translations" id="input_file_translations" name="input_file_translations" type="file" accept="text,.txt,.csv,.pdf,.word,.xlsx,.ppt">
+						</div>
+
 					</div>
 				</form>
 			</div> 
@@ -130,6 +135,7 @@
 		    		            <th><span class="flex items-center">Title of Translated Book and Link</span></th>
 		    		            <th><span class="flex items-center">Year of Publication of Translation</span></th>
 		    		            <th><span class="flex items-center">Publisher</span></th>
+		    		            <th><span class="flex items-center">Attached File</span></th>
 					        </tr>
 					    </thead>
 					    <!-- <tbody>
@@ -183,7 +189,17 @@
             	{ data: "language" },
             	{ data: "title_of_book_and_link" },
             	{ data: "year_of_translation" },
-            	{ data: "publisher" }
+            	{ data: "publisher" },
+            	{ 
+            		data: "file_translations",
+            		render: function(data, type, row) {
+            			if(data !== null){
+            					return '<a href="storage/uploads/' + data + '" title="View File">'+ data +'</a>';
+            			    }else{
+            			        return ' ';
+            			    }
+            		}
+            	}
          	],
 	             error:  function(response){
 	                 console.log("ERROR",response);
