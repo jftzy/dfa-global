@@ -12,7 +12,7 @@ class AccomplishmentsSeeder extends Seeder
      */
     public function run(): void
     {
-        for($x=1;$x<=1000;$x++){
+        for($x=1;$x<=500;$x++){
             $rand =mt_rand(1577836800,1735603200);
             $dyt = date('Y-m-d',$rand);
 

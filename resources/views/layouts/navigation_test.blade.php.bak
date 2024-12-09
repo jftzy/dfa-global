@@ -1,0 +1,192 @@
+<aside id="sidebar-multi-level-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
+   <div class="h-full px-3 py-4 overflow-y-auto bg-gray-50 dark:bg-gray-800">
+      <!-- Logo -->
+      <div class="shrink-0 inline-flex items-center justify-center text-center pt-5 pb-7">
+          <a href="{{ route('dashboard') }}">
+              <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
+          </a>
+          <h5 class="font-normal text-xs text-gray-700 pl-2 flex flex-col items-start">
+              <span>Department of</span>
+              <span>Foreign</span>
+              <span>Affairs</span>
+          </h5>
+      </div>
+      <ul class="space-y-2 font-medium">
+         <li>
+            <button type="button" class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="dashboard-dropdown" data-collapse-toggle="dashboard-dropdown">
+                  <x-icons.icon-dashboard></x-icons.icon-dashboard>
+                  <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ __('Dashboard') }}</span>
+                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg>
+            </button>
+            <ul id="dashboard-dropdown" class="hidden py-2 space-y-2">
+                  <li>
+                     <x-sub-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-gray-400">
+                        {{ __('Countries') }}
+                     </x-sub-nav-link>
+                  </li>
+                  <li>
+                     <x-sub-nav-link :href="route('dashboard.regional')" :active="request()->routeIs('dashboard.regional')" class="text-gray-400">
+                        {{ __('Regions') }}
+                     </x-sub-nav-link>
+                  </li>
+            </ul>
+         </li>
+         <li>
+            <button type="button" class="inline-flex items-center px-2 py-2 rounded bg-transparent w-full border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-100 focus:outline-none transition duration-150 ease-in-out hover:scale-105" aria-controls="reports-dropdown" data-collapse-toggle="reports-dropdown">
+                  <x-icons.icon-files class="h-5"></x-icons.icon-files>
+                  <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ __('Reports') }}</span>
+                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg>
+            </button>
+            <ul id="reports-dropdown" class="hidden py-2 space-y-2">
+                  <li>
+                    <x-sub-nav-link :href="route('reports.accomplishments')" :active="request()->routeIs('reports-accomplishments')" class="text-gray-400">
+                        Accomplishments
+                    </x-sub-nav-link>
+                  </li>
+                  <li>
+                    <x-sub-nav-link :href="route('reports.events')" :active="request()->routeIs('reports-events')" class="text-gray-400">
+                        Events
+                    </x-sub-nav-link>
+                  </li>
+                  <li class="relative">
+                    <x-sub-nav-link :href="route('reports.translations')" :active="request()->routeIs('reports-translations')" class="text-gray-400">
+                        Translations
+                    </x-sub-nav-link>
+                  </li>
+            </ul>
+         </li>
+         <li>
+            <button type="button" class="inline-flex items-center px-2 py-2 rounded bg-transparent w-full border-transparent text-sm font-medium leading-5 text-gray-500 hover:text-gray-700 hover:border-gray-300 hover:bg-gray-100 focus:outline-none transition duration-150 ease-in-out hover:scale-105" aria-controls="settings-dropdown" data-collapse-toggle="settings-dropdown">
+                  <x-icons.icon-settings class="h-5"></x-icons.icon-settings>
+                  <span class="flex-1 ms-3 text-left rtl:text-right whitespace-nowrap">{{ __('Data Management') }}</span>
+                  <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
+                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 4 4 4-4"/>
+                  </svg>
+            </button>
+            <ul id="settings-dropdown" class="hidden py-2 space-y-2">
+                  <li>
+                    <x-sub-nav-link :href="route('settings.accomplishments')" :active="request()->routeIs('settings-accomplishments')" class="text-gray-400">
+                        Accomplishments
+                    </x-sub-nav-link>
+                  </li>
+                  <li>
+                    <x-sub-nav-link :href="route('settings.events')" :active="request()->routeIs('settings-events')" class="text-gray-400">
+                        Events
+                    </x-sub-nav-link>
+                  </li>
+                  <li class="relative">
+                    <x-sub-nav-link :href="route('settings.translations')" :active="request()->routeIs('settings-translations')" class="text-gray-400">
+                        Translations
+                    </x-sub-nav-link>
+                  </li>
+            </ul>
+         </li>
+      </ul>
+   </div>
+</aside>
+
+<div class="p-4 sm:ml-64">
+   <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
+      <div class="grid grid-cols-3 gap-4 mb-4">
+         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+               </svg>
+            </p>
+         </div>
+         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+               </svg>
+            </p>
+         </div>
+         <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+               </svg>
+            </p>
+         </div>
+      </div>
+      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+         <p class="text-2xl text-gray-400 dark:text-gray-500">
+            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+            </svg>
+         </p>
+      </div>
+      <div class="grid grid-cols-2 gap-4 mb-4">
+         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+               </svg>
+            </p>
+         </div>
+         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+               </svg>
+            </p>
+         </div>
+         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+               </svg>
+            </p>
+         </div>
+         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+               </svg>
+            </p>
+         </div>
+      </div>
+      <div class="flex items-center justify-center h-48 mb-4 rounded bg-gray-50 dark:bg-gray-800">
+         <p class="text-2xl text-gray-400 dark:text-gray-500">
+            <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+            </svg>
+         </p>
+      </div>
+      <div class="grid grid-cols-2 gap-4">
+         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+               </svg>
+            </p>
+         </div>
+         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+               </svg>
+            </p>
+         </div>
+         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+               </svg>
+            </p>
+         </div>
+         <div class="flex items-center justify-center rounded bg-gray-50 h-28 dark:bg-gray-800">
+            <p class="text-2xl text-gray-400 dark:text-gray-500">
+               <svg class="w-3.5 h-3.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 18">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 1v16M1 9h16"/>
+               </svg>
+            </p>
+         </div>
+      </div>
+   </div>
+</div>

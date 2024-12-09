@@ -2,7 +2,7 @@
 	
 	<x-slot name="header">
 	    <h2 class="font-semibold text-lg text-gray-800 leading-tight">
-	        {{ __('Data Settings') }}
+	        {{ __('Data Settings - Accomplishments') }}
 	    </h2>
 	</x-slot>
 
@@ -29,7 +29,7 @@
 	                             Input Data
 	                        </button>
 	    		        </div>
-	        	        <a href="{{ asset('templates/template_accomplishments.csv') }}" class="inline-flex items-center px-6 py-2 mt-4 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-500 focus:ring-2 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 hover:scale-105">
+	        	        <a href="{{ asset('templates/template_accomplishments.csv') }}" class="inline-flex items-center px-6 py-2 mt-4 text-sm font-medium text-center text-white bg-green-600 rounded-lg hover:bg-green-500 focus:ring-2 focus:outline-none focus:ring-green-300 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800 hover:scale-105" :class="upload_form ? 'block' : 'hidden'">
 	                         <x-icons.icon-download class="h-6 mr-3"></x-icons.icon-download>
 	                         Download Template
 	                    </a>
@@ -113,15 +113,16 @@
 					<div class="w-1/2">
 
 						<label for="input_country" class="mt-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Country</label>
-						<select id="input_country" name="input_country" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+						<select id="input_country" name="input_country" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 								<option>-- Select Country --</option>
 							@foreach($countries as $country)
 								<option value="{{ $country->id }}">{{ $country->name }}</option>
 							@endforeach
 						</select>
+
 					  <div class="mb-3 mt-3">
 					    <label for="input_title" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Title</label>
-					    <input type="text" id="input_title" name="input_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. National Womens Month" required />
+					    <input type="text" id="input_title" name="input_title" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. National Womens Month" required />
 					  </div>
 
 					  <div class="mb-3">
@@ -138,7 +139,7 @@
 					  </div>
 
 					  <label for="input_month" class="mt-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Select a month</label>
-					  <select id="input_month" name="input_month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					  <select id="input_month" name="input_month" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					  	<option selected>-- Select Month --</option>
 					  	<option value="1">January</option>
 					  	<option value="2">February</option>
@@ -155,19 +156,21 @@
 					  </select>
 
 					  <label for="input_project_type" class="mt-3 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Type</label>
-					  <select id="input_project_type" name="input_project_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					  <select id="input_project_type" name="input_project_type" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					  	<option selected>-- Select Project Type --</option>
 					  	<option value="Flagship">Flagship</option>
 					  	<option value="One Time">One Time</option>
 					  	<option value="Recurring">Recurring</option>
+					  	<option value="Others">Others</option>
 					  </select>
 
 					  <label for="input_project_classification" class="mt-3 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Project Classification</label>
-					  <select id="input_project_classification" name="input_project_classification" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					  <select id="input_project_classification" name="input_project_classification" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					  	<option selected>-- Select Project Classification --</option>
 					  	<option value="Flagship">Cultural Heritage</option>
 					  	<option value="One Time">Filipino Heritage</option>
 					  	<option value="Recurring">Pop Culture</option>
+					  	<option value="Others">Others</option>
 					  </select>
 					  
 					    <button type="submit" class="mt-4 text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -177,30 +180,36 @@
 
 					<div class="w-1/2">
 					  <label for="input_foreign_policy_pillar" class="mt-2 block mb-2 text-sm font-medium text-gray-900 dark:text-white">Foreign Policy Pillar</label>
-					  <select id="input_foreign_policy_pillar" name="input_foreign_policy_pillar" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+					  <select id="input_foreign_policy_pillar" name="input_foreign_policy_pillar" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 					  	<option selected>-- Select Foreign Policy Pillar --</option>
 					  	<option value="Cultural Promotion">Cultural Promotion</option>
 					  	<option value="Economic Diplomacy">Economic Diplomacy</option>
 					  	<option value="National Security">National Security</option>
+					  	<option value="Others">Others</option>
 					  </select>
 					  <div class="mb-3 mt-3">
 					    <label for="input_target_audience" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Target Audience</label>
-					    <input type="text" id="input_target_audience" id="input_target_audience" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. Filipino Cummunity"/>
+					    <input type="text" id="input_target_audience" name="input_target_audience" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="e.g. Filipino Cummunity"/>
 					  </div>
 
 					  <div class="mb-3">
 					    <label for="input_strategic_plan" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Strategic Plan</label>
-					    <input type="text" id="input_strategic_plan" name="input_strategic_plan" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter strategic plan.."/>
+					    <input type="text" id="input_strategic_plan" name="input_strategic_plan" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter strategic plan.."/>
 					  </div>
 
 					  <div class="mb-3">
 					    <label for="input_diplomacy" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Diplomacy</label>
-					    <input type="text" id="input_diplomacy" name="input_diplomacy" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter diplomacy"/>
+					    <input type="text" id="input_diplomacy" name="input_diplomacy" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter diplomacy"/>
 					  </div>
 
 					  <div class="mb-3">
 					    <label for="input_cultural_domains" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Cultural Domains</label>
-					    <input type="text" id="input_cultural_domains" name="input_cultural_domains" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter cultural domain"/>
+					    <input type="text" id="input_cultural_domains" name="input_cultural_domains" class="bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Enter cultural domain"/>
+					  </div>
+
+					  <div class="mb-3">
+					    <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="input_file_accomplishments">Upload File</label>
+					    <input class="block w-full text-xs text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400" aria-describedby="input_file_accomplishments" id="input_file_accomplishments" name="input_file_accomplishments" type="file" accept="text,.txt,.csv,.pdf,.word,.xlsx,.ppt">
 					  </div>
 
 					</div>
@@ -230,6 +239,7 @@
 				                    <th><span class="flex items-center">Strategic Plan</span></th>
 				                    <th><span class="flex items-center">Diplomacy</span></th>
 				                    <th><span class="flex items-center">Cultural Domains</span></th>
+				                    <th><span class="flex items-center">Attached File</span></th>
 						        </tr>
 						    </thead>
 						    <!-- <tbody>
@@ -276,19 +286,6 @@
 	    	"pageLength": 5,
 	    	scrollX: true,
 	    	paging: true,
-	    	// "searching": true,
-	         // "order": [[ 2, 'desc' ]],
-	        //  "lengthMenu": [
-	        //      [5, 10, 15, 25, -1],
-	        //      [5, 10, 15, 25, "All"] // change per page values here
-	        // ],
-	        // dom: 'lBfrtip',
-	        // buttons: [
-	        //               // { extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Exportar a PDF</i>' },
-	        //               { extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"> Exportar a CSV</i>' },
-	        //               { extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"> Exportar a EXCEL</i>' },
-	        //               'pageLength'
-	        //           ],
 	        ajax: { url: '{{ ENV('APP_URL') }}/api/statistics', },
             columns: [
             	{ data: "country" },
@@ -307,7 +304,17 @@
             	{ data: "target_audience" },
             	{ data: "strategic_plan" },
             	{ data: "diplomacy" },
-            	{ data: "cultural_domains" }
+            	{ data: "cultural_domains" },
+            	{ 
+            		data: "attached_file",
+            		render: function(data, type, row) {
+            			if(data !== null){
+            					return '<a href="storage/uploads/' + data + '" title="View File">'+ data +'</a>';
+            			    }else{
+            			        return ' ';
+            			    }
+            		}
+            	}
          	],
 	             error:  function(response){
 	                 console.log("ERROR",response);

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Accomplishment extends Model
 {
     protected $fillable = [
-        'name',
         'country_id',
         'title',
         'month',
@@ -21,6 +20,7 @@ class Accomplishment extends Model
         'strategic_plan',
         'diplomacy',
         'cultural_domains',
+        'file_url',
         'created_at'
     ];
 

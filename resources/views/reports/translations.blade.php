@@ -12,7 +12,7 @@
 		.w-full.p-4.data-table-container .dt-paging {
 			position: absolute;
 			right: 0;
-			bottom: -10px;
+			bottom: -25px;
 		}
 		.w-full.p-4.data-table-container div#stats_table_info {
 			padding-top: 15px;
@@ -45,6 +45,7 @@
 	    		            <th><span class="flex items-center">Title of translated book and link</span></th>
 	    		            <th><span class="flex items-center">Year of publication of translation</span></th>
 	    		            <th><span class="flex items-center">Publisher</span></th>
+	    		            <th><span class="flex items-center">Attached File</span></th>
 				        </tr>
 				    </thead>
 				    <!-- <tbody>
@@ -145,19 +146,15 @@
 		"pageLength": 5,
 		scrollX: true,
 		paging: true,
-	     "order": [[ 2, 'desc' ]],
-	     "searching": true,
-	     "lengthMenu": [
-	         [5, 10, 15, 25, -1],
-	         [5, 10, 15, 25, "All"] // change per page values here
-	    ],
+	    "searching": true,
 	    dom: 'lBfrtip',
-	    buttons: [
-	                  // { extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"> Exportar a PDF</i>' },
-	                  { extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"> Exportar a CSV</i>' },
-	                  { extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"> Exportar a EXCEL</i>' },
-	                  'pageLength'
-	              ],
+        buttons: [
+			{ extend: 'copy', text: '<i class="fas fa-file-copy fa-1x" aria-hidden="true"> <b>Copy Data</b></i>' },
+			{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"><b>PDF</b></i>' },
+			{ extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"><b>CSV</b></i>' },
+			{ extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"><b>EXCEL</b></i>' },
+			'pageLength'
+		],
 	    ajax: { url: '{{ ENV('APP_URL') }}/api/translations', },
 	    columns: [
 	    	{ data: "book_title" },
@@ -166,17 +163,20 @@
 	    	{ data: "language" },
 	    	{ data: "title_of_book_and_link" },
 	    	{ data: "year_of_translation" },
-	    	{ data: "publisher" }
+	    	{ data: "publisher" },
+	    	{ 
+	    		data: "file_translations",
+	    		render: function(data, type, row) {
+	    			if(data !== null){
+	    					return '<a href="storage/uploads/' + data + '" title="View File">'+ data +'</a>';
+	    			    }else{
+	    			        return ' ';
+	    			    }
+	    		}
+	    	}
 	 	],
 	         error:  function(response){
 	             console.log("ERROR",response);
 	         }
 	    });
 </script>
-'book_title',
-'',
-'translator',
-'language',
-'title_of_book_and_link',
-'year_of_translation',
-'publisher'

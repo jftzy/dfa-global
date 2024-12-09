@@ -25,6 +25,7 @@ return new class extends Migration
             $table->string('strategic_plan')->nullable();
             $table->string('diplomacy')->nullable();
             $table->string('cultural_domains')->nullable();
+            $table->string('attached_file')->nullable();
             $table->timestamps();
         });
     }

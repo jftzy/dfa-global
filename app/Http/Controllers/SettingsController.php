@@ -256,7 +256,7 @@ class SettingsController extends Controller
     public function storeAccomplishments(Request $request) {
 
         // evaluate month
-        $monthSelected = $request['month'];
+        $monthSelected = $request['input_month'];
         if ($monthSelected < 4) {
             $monthSelected = '1';
         } elseif ($monthSelected > 3 && $monthSelected < 7) {
@@ -267,24 +267,74 @@ class SettingsController extends Controller
             $monthSelected = '4';
         }
 
+        $month_converted = $this->monthConvertion($request['input_month']);
+
+        // validations
+        $request->validate([
+            'input_country' => 'required|numeric',
+            'input_title' => 'required|string',
+            'input_month' => 'required|string',
+            'input_year' => 'required|numeric',
+            'input_project_type' => 'string',
+            'input_project_classification' => 'string',
+            'input_foreign_policy_pillar' => 'string',
+            'input_target_audience' => 'string',
+            'input_strategic_plan' => 'string',
+            'input_diplomacy' => 'string',
+            'input_cultural_domains' => 'string',
+            'input_file_accomplishments' => 'max:5048'
+        ]);
+
+        // store the file -- manipulate the data
+        $file = $request->file('input_file_accomplishments');
+        $name = $file->getClientOriginalName();
+        $name = str_replace(',','_', $name);
+        $name = str_replace(' ','_', $name);
+        $name = explode('.', $name);
+        $time = date('hidmy');
+        $nameStack = $name[0].$time;
+        $name = implode('.', [$nameStack,$name[1]]);
+        $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
+
         $accomplishment = new Accomplishment;
         $accomplishment->country_id = $request['input_country'];
         $accomplishment->title = $request['input_title'];
         $accomplishment->year = $request['input_year'];
-        $accomplishment->month = $request['input_month'];
+        $accomplishment->month = $month_converted;
         $accomplishment->quarter = $monthSelected;
         $accomplishment->project_type = $request['input_project_type'];
         $accomplishment->project_classification = $request['input_project_classification'];
         $accomplishment->foreign_policy_pillar = $request['input_foreign_policy_pillar'];
         $accomplishment->target_audience = $request['input_target_audience'];
+        $accomplishment->strategic_plan = $request['input_strategic_plan'];
         $accomplishment->diplomacy = $request['input_diplomacy'];
         $accomplishment->cultural_domains = $request['input_cultural_domains'];
+        $accomplishment->attached_file = $name;
         $accomplishment->save();
 
         return redirect('settings-accomplishments')->with('success', 'Data successfully saved.'); 
     }
 
     public function storeEvents(Request $request) {
+
+        // validations
+        $request->validate([
+            'input_host_communities' => 'required|string',
+            'input_date_from' => 'required|date',
+            'input_date_to' => 'required|date',
+            'input_file_events' => 'max:5048'
+        ]);
+
+        // store the file -- manipulate the data
+        $file = $request->file('input_file_events');
+        $name = $file->getClientOriginalName();
+        $name = str_replace(',','_', $name);
+        $name = str_replace(' ','_', $name);
+        $name = explode('.', $name);
+        $time = date('hidmy');
+        $nameStack = $name[0].$time;
+        $name = implode('.', [$nameStack,$name[1]]);
+        $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
 
         $events = new CulturalEventsAndTargetAudiences;
         // values
@@ -293,6 +343,7 @@ class SettingsController extends Controller
         $events['other_stakeholders'] = $request['input_other_stakeholders'];
         $events['title_of_the_event'] = $request['input_event_title'];
         $events['short_description'] = $request['input_short_description'];
+        $events['file_events'] = $name;
         $events['date_from'] = $request['input_date_from'];
         $events['date_to'] = $request['input_date_to'];
         $events->save();
@@ -301,6 +352,24 @@ class SettingsController extends Controller
     }
 
     public function storeTranslations(Request $request) {
+
+        // validations
+        $request->validate([
+            'input_book_title' => 'required|string',
+            'input_author' => 'required|string',
+            'input_file_translations' => 'max:5048'
+        ]);
+
+        // store the file -- manipulate the data
+        $file = $request->file('input_file_translations');
+        $name = $file->getClientOriginalName();
+        $name = str_replace(',','_', $name);
+        $name = str_replace(' ','_', $name);
+        $name = explode('.', $name);
+        $time = date('hidmy');
+        $nameStack = $name[0].$time;
+        $name = implode('.', [$nameStack,$name[1]]);
+        $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
 
         $translations = new Translation;
         // values
@@ -311,6 +380,7 @@ class SettingsController extends Controller
         $translations['title_of_book_and_link'] = $request['input_title_of_book_and_link'];
         $translations['year_of_translation'] = $request['input_year_of_translation'];
         $translations['publisher'] = $request['input_publisher'];
+        $translations['file_translations'] = $name;
         $translations->save();
 
         // return a response
