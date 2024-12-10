@@ -29,18 +29,18 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            <div class="w-full inline-flex">
-                <div class="w-[15%]">
+            <div class="w-full flex flex-col lg:flex-row">
+                <div class="w-full lg:w-[15%]">
 
                     <!-- Navigation -->
                     @include('layouts.navigation')
 
                 </div>
-                <div class="w-[85%]">
+                <div class="w-full lg:w-[85%]">
 
                     <!-- Page Heading -->
                     @isset($header)
-                        <header class="bg-white shadow">
+                        <header class="bg-[#343a40] shadow">
                             <div class="mx-auto py-6 px-4 sm:px-6 lg:px-8">
                                 {{ $header }}
                             </div>
