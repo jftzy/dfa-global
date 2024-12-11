@@ -16,10 +16,13 @@
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0 bg-[#343a40]" style="background-image: url('{{ ENV('APP_URL')}}/imgs/dfa-bg-concept.jpg'); background-repeat: no-repeat; background-size: cover;">
-            <a href="/">
+            <a href="{{ ENV('APP_URL')}}/dashboard">
                 <x-application-logo-main class="w-32 h-32 fill-current text-gray-500" />
             </a>
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+                <div class="w-full inline-flex justify-center pt-2 pb-6">
+                    <h4 class="text-xl font-bold text-center text-gray-700">Data Analysis and Management Application <small class="text-gray-600 text-xs"><i>(DAMApp)</i></small></h4>
+                </div>
                 {{ $slot }}
             </div>
         </div>
