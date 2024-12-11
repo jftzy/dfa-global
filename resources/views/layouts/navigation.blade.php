@@ -37,12 +37,12 @@
                 </button>
                 <ul id="dashboard-dropdown" class="hidden pt-3 space-y-3">
                       <li>
-                        <x-sub-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-white text-xs lg:text-sm">
+                        <x-sub-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')" class="text-xs lg:text-sm">
                             Countries
                         </x-sub-nav-link>
                       </li>
                       <li>
-                        <x-sub-nav-link :href="route('dashboard.regional')" :active="request()->routeIs('dashboard.regional')" class="text-white text-xs lg:text-sm">
+                        <x-sub-nav-link :href="route('dashboard.regional')" :active="request()->routeIs('dashboard.regional')" class="text-xs lg:text-sm">
                             Regions
                         </x-sub-nav-link>
                       </li>
@@ -58,17 +58,17 @@
                 </button>
                 <ul id="reports-dropdown" class="hidden pt-3 space-y-3">
                       <li>
-                        <x-sub-nav-link :href="route('reports.accomplishments')" :active="request()->routeIs('reports.accomplishments')" class="text-gray-400 text-xs lg:text-sm">
+                        <x-sub-nav-link :href="route('reports.accomplishments')" :active="request()->routeIs('reports.accomplishments')" class="text-xs lg:text-sm">
                             Accomplishments
                         </x-sub-nav-link>
                       </li>
                       <li>
-                        <x-sub-nav-link :href="route('reports.events')" :active="request()->routeIs('reports.events')" class="text-gray-400 text-xs lg:text-sm">
+                        <x-sub-nav-link :href="route('reports.events')" :active="request()->routeIs('reports.events')" class="text-xs lg:text-sm">
                             Events
                         </x-sub-nav-link>
                       </li>
                       <li class="relative">
-                        <x-sub-nav-link :href="route('reports.translations')" :active="request()->routeIs('reports.translations')" class="text-gray-400 text-xs lg:text-sm">
+                        <x-sub-nav-link :href="route('reports.translations')" :active="request()->routeIs('reports.translations')" class="text-xs lg:text-sm">
                             Translations
                         </x-sub-nav-link>
                       </li>
@@ -84,17 +84,17 @@
                 </button>
                 <ul id="settings-dropdown" class="hidden pt-3 space-y-3">
                   <li>
-                    <x-sub-nav-link :href="route('settings.accomplishments')" :active="request()->routeIs('settings.accomplishments')" class="text-gray-400 text-xs lg:text-sm">
+                    <x-sub-nav-link :href="route('settings.accomplishments')" :active="request()->routeIs('settings.accomplishments')" class="text-xs lg:text-sm">
                         Accomplishments
                     </x-sub-nav-link>
                   </li>
                   <li>
-                    <x-sub-nav-link :href="route('settings.events')" :active="request()->routeIs('settings.events')" class="text-gray-400 text-xs lg:text-sm">
+                    <x-sub-nav-link :href="route('settings.events')" :active="request()->routeIs('settings.events')" class="text-xs lg:text-sm">
                         Events
                     </x-sub-nav-link>
                   </li>
                   <li class="relative">
-                    <x-sub-nav-link :href="route('settings.translations')" :active="request()->routeIs('settings.translations')" class="text-gray-400 text-xs lg:text-sm">
+                    <x-sub-nav-link :href="route('settings.translations')" :active="request()->routeIs('settings.translations')" class="text-xs lg:text-sm">
                         Translations
                     </x-sub-nav-link>
                   </li>
