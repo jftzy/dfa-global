@@ -12,16 +12,10 @@
         }
     </style>
     
-    <x-slot name="header">
-        <h2 class="font-semibold text-lg text-gray-800 leading-tight">
-            {{ __('Welcome to Dashboard, ') }} {{ auth()->user()->name }} !
-        </h2>
-    </x-slot>
-    
     <input type="hidden" name="yr" id="yr" value="{{$year}}">
     <div class="py-6" x-data="{}">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="p-6 bg-white overflow-hidden shadow-sm sm:rounded-lg inline-flex justify-between items-center w-full">
+            <div class="px-6 py-3 bg-white overflow-hidden shadow-sm sm:rounded-lg inline-flex justify-between items-center w-full">
                 <div class="text-gray-800 inline-flex items-center">
                     <x-icons.icon-globe class="h-12 w-12 mr-2"></x-icons.icon-globe>
                     <div class="flex flex-col">

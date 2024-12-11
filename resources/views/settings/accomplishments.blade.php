@@ -1,8 +1,8 @@
 <x-app-layout>
 	
 	<x-slot name="header">
-	    <h2 class="font-semibold text-lg text-gray-800 leading-tight">
-	        {{ __('Data Settings - Accomplishments') }}
+	    <h2 class="font-semibold text-lg text-gray-100 leading-tight">
+	        {{ __('Data Settings -') }} <span class="text-[#fdc02f]">{{ __('Accomplishments') }}</span>
 	    </h2>
 	</x-slot>
 
@@ -13,7 +13,7 @@
 
 		<div class="w-full flex flex-col p-6">
 			<div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row">
-			    <img class="object-cover rounded-t-lg h-52 w-[250px] md:rounded-none md:rounded-s-lg" src="{{ ENV('APP_URL')}}/imgs/data-analysis.jpg" alt="">
+			    <img class="hidden md:block object-cover rounded-t-lg h-52 w-[250px] md:rounded-none md:rounded-s-lg" src="{{ ENV('APP_URL')}}/imgs/data-analysis.jpg" alt="">
 			    <div class="flex flex-col justify-between p-4 leading-normal h-full">
 			        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Upload Statistical Data</h5>
 			        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Uploading statistical data typically involves transferring data sets that contain statistical information from a local device to the server. This process is crucial for data analysis, information sharing, reporting and storage.</p>

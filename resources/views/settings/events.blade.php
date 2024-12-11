@@ -1,8 +1,8 @@
 <x-app-layout>
 	
 	<x-slot name="header">
-	    <h2 class="font-semibold text-lg text-gray-800 leading-tight">
-	        {{ __('Data Settings - Events') }}
+	    <h2 class="font-semibold text-lg text-gray-100 leading-tight">
+	        {{ __('Data Settings -') }} <span class="text-[#fdc02f]">{{ __('Events') }}</span>
 	    </h2>
 	</x-slot>
 
@@ -13,7 +13,7 @@
 
 		<div class="w-full flex flex-col p-6">
 			<div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row">
-			    <img class="object-cover rounded-t-lg h-52 w-[250px] md:rounded-none md:rounded-s-lg" src="{{ ENV('APP_URL')}}/imgs/events.jpg" alt="">
+			    <img class="hidden md:block object-cover rounded-t-lg h-52 w-[250px] md:rounded-none md:rounded-s-lg" src="{{ ENV('APP_URL')}}/imgs/events.jpg" alt="">
 			    <div class="flex flex-col justify-between p-4 leading-normal h-full">
 			        <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">Upload Events and Audience Data</h5>
 			        <p class="mb-3 font-normal text-gray-500 dark:text-gray-400">Uploading events and audience data involves contributing detailed information about various events and their respective audiences to a database or analytics platform. This process is crucial for organizations to track, analyze, and optimize their events and audience engagement strategies.</p>

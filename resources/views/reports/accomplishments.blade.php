@@ -17,33 +17,38 @@
 		.w-full.p-4.data-table-container div#stats_table_info {
 			padding-top: 15px;
 		}
+		@media only screen and (max-width: 768px) {
+			.w-full.p-4.data-table-container .dt-search {
+				position: inherit;
+			}
+		}
 	</style>
 
 	<x-slot name="header">
 		<div class="w-full inline-flex justify-between">
-		    <h2 class="font-semibold text-lg text-gray-800 leading-tight">
-		        {{ __('Reports - Accomplishments') }}
+		    <h2 class="font-semibold text-lg text-gray-100 leading-tight">
+		        {{ __('Reports -') }} <span class="text-[#fdc02f]">{{ __('Accomplishments') }}</span>
 		    </h2>
 		    <label class="inline-flex items-center cursor-pointer">
 		      <input type="checkbox" id="is_interactive" class="sr-only peer">
-		      <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-		      <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300" id="mode_click">Switch to Summary</span>
+		      <div class="relative w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-yellow-300 dark:peer-focus:ring-yellow-600 dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-yellow-400"></div>
+		      <span class="ms-3 text-sm font-medium text-gray-100 dark:text-gray-300" id="mode_click">Switch to Summary</span>
 		    </label>
 		</div>
 	</x-slot>
 
 	<div class="border-b border-gray-300 shadow rounded p-4 interactive-table">
-		<form class="max-w-sm mx-1 inline-flex items-center gap-4">
-		<span class="text-sm font-bold- pl-2 text-gray-700">
-			Filters:
-		</span>
-			<select id="region" name="region" class="min-w-64 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+		<form class="inline-flex items-center gap-4 flex-wrap lg:flex-nowrap">
+			<span class="text-sm font-bold- pl-2 text-gray-700">
+				Filters:
+			</span>
+			<select id="region" name="region" class="lg:min-w-52 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-2.5 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 				<option value="" selected>Choose Region</option>
 				@foreach(\App\Models\Region::get() as $r)
 				<option value="{{$r->id}}">{{$r->name}}</option>
 				@endforeach
 			</select>
-			<select id="year" name="year" class="min-w-64 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+			<select id="year" name="year" class="lg:min-w-52 bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full px-3 py-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
 				<option value="" selected>Choose Year</option>
 					@for($y = 2024; $y >= 2020; $y--)
 					<option value="{{$y}}">{{$y}}</option>
