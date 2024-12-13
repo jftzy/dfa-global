@@ -31,8 +31,13 @@ Route::middleware('auth')->group(function () {
 
     // Settings Routing
     Route::get('/settings-accomplishments', [SettingsController::class, 'accomplishments'])->name('settings.accomplishments');
+    Route::get('/settings-accomplishments-edit/{id?}', [SettingsController::class, 'editAccomplishments'])->name('settings.accomplishments-edit');
     Route::get('/settings-events', [SettingsController::class, 'events'])->name('settings.events');
     Route::get('/settings-translations', [SettingsController::class, 'translations'])->name('settings.translations');
+
+    Route::post('/settings-accomplishment-update/{id?}', [SettingsController::class, 'updateAccomplishment'])->name('settings.accomplishment-update');
+
+    Route::post('/settings-accomplishment-delete/{id?}', [SettingsController::class, 'deleteAccomplishment'])->name('settings.accomplishment-delete');
 
     Route::post('/settings-upload-accomplishments', [SettingsController::class, 'uploadAccomplishments'])->name('settings.upload-accomplishments');
     Route::post('/settings-upload-events', [SettingsController::class, 'uploadEvents'])->name('settings.upload-events');

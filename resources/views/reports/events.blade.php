@@ -22,10 +22,31 @@
 				position: inherit;
 			}
 		}
+		@media print {
+	        .no-print {
+	            display: none !important;
+	        }
+	        .go-print {
+	        	display: block !important;
+	        }
+	    }
+	    .floats{
+	    	position:fixed;
+	    	width:60px;
+	    	height:60px;
+	    	bottom:40px;
+	    	right:40px;
+	    	background-color:#0C9;
+	    	color:#FFF;
+	    	border-radius:50px;
+	    	text-align:center;
+	    	box-shadow: 2px 2px 3px #999;
+	    	cursor: pointer;
+	    }
 	</style>
 
 	<x-slot name="header">
-		<div class="w-full inline-flex justify-between">
+		<div class="w-full inline-flex justify-between no-print">
 		    <h2 class="font-semibold text-lg text-gray-100 leading-tight">
 		        {{ __('Reports -') }} <span class="text-[#fdc02f]">{{ __('Events') }}</span>
 		    </h2>
@@ -64,7 +85,11 @@
 		</div>
 
 		<div class="hidden p-4" id="events_native">
+			<div class="border text-center py-4 font-bold text-lg relative go-print hidden">
+				Cultural Events Summary Report
+			</div>
 			<div class="relative overflow-x-auto overflow-y-auto shadow-md max-h-[620px]">
+				<button class="px-4 py-2 floats pointer no-print" title="Print" onclick="window.print()"><x-icons.icon-print class="w-8 h-8"></x-icons.icon-print></button>
 			    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
 			        <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
 			            <tr>

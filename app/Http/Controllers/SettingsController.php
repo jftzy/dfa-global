@@ -18,6 +18,11 @@ class SettingsController extends Controller
         return view('settings.accomplishments');
     }
 
+    public function editAccomplishments($id) {
+        $accomplishment = Accomplishment::find($id);
+        return view('settings.accomplishments-edit', compact('accomplishment'));
+    }
+
     public function uploadAccomplishments(Request $request) {
 
         // validations
@@ -387,4 +392,67 @@ class SettingsController extends Controller
         return redirect('settings-translations')->with('success', 'Data uploaded successfully'); 
     }
 
+    // Updates functions
+    public function updateAccomplishment(Request $request, $id) {
+
+        // evaluate month
+        $monthSelected = $request['input_month'];
+        if ($monthSelected < 4) {
+            $monthSelected = '1';
+        } elseif ($monthSelected > 3 && $monthSelected < 7) {
+            $monthSelected = '2';
+        } elseif ($monthSelected > 6 && $monthSelected < 10) {
+            $monthSelected = '3';
+        } else {
+            $monthSelected = '4';
+        }
+
+        $month_converted = $this->monthConvertion($request['input_month']);
+        $accomplishment = Accomplishment::find($id);
+
+        // store the file -- manipulate the data
+        $file = $request->file('input_file_accomplishments');
+
+        if ($file) {
+            // code...
+            $name = $file->getClientOriginalName();
+            $name = str_replace(',','_', $name);
+            $name = str_replace(' ','_', $name);
+            $name = explode('.', $name);
+            $time = date('hidmy');
+            $nameStack = $name[0].$time;
+            $name = implode('.', [$nameStack,$name[1]]);
+            $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
+        } else {
+            $name = $accomplishment->attached_file;
+        }
+
+        $accomplishment->country_id = $request['input_country'];
+        $accomplishment->title = $request['input_title'];
+        $accomplishment->year = $request['input_year'];
+        $accomplishment->month = $month_converted;
+        $accomplishment->quarter = $monthSelected;
+        $accomplishment->project_type = $request['input_project_type'];
+        $accomplishment->project_classification = $request['input_project_classification'];
+        $accomplishment->foreign_policy_pillar = $request['input_foreign_policy_pillar'];
+        $accomplishment->target_audience = $request['input_target_audience'];
+        $accomplishment->strategic_plan = $request['input_strategic_plan'];
+        $accomplishment->diplomacy = $request['input_diplomacy'];
+        $accomplishment->cultural_domains = $request['input_cultural_domains'];
+        $accomplishment->attached_file = $name;
+        $accomplishment->save();
+
+        return redirect('settings-accomplishments')->with('success', 'Data updated successfully.'); 
+    }
+
+    // Delete Data Functions
+    public function deleteAccomplishment($id) {
+
+        $data = Accomplishment::findOrFail($id);
+        $data->delete();
+
+        return response()->json([
+            'data' => $data
+        ], 200);
+    }
 }
