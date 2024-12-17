@@ -151,6 +151,11 @@ class SettingsController extends Controller
         return view('settings.translations');
     }
 
+    public function editTranslations($id) {
+        $translation = Translation::find($id);
+        return view('settings.translations-edit', compact('translation'));
+    }
+
     public function uploadTranslations(Request $request) {
         
         // validations

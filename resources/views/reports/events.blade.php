@@ -70,7 +70,6 @@
     		            <th><span class="flex items-center">Event Title</span></th>
     		            <th><span class="flex items-center">Short Description</span></th>
     		            <th><span class="flex items-center">Date</span></th>
-    		            <th><span class="flex items-center">Attached File</span></th>
 			        </tr>
 			    </thead>
 			    <!-- <tbody>
