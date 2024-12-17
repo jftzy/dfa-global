@@ -37,6 +37,7 @@ Route::middleware('auth')->group(function () {
     // Edit Routing
     Route::get('/settings-accomplishments-edit/{id?}', [SettingsController::class, 'editAccomplishments'])->name('settings.accomplishments-edit');
     Route::get('/settings-events-edit/{id?}', [SettingsController::class, 'editEvents'])->name('settings.events-edit');
+    Route::get('/settings-translations-edit/{id?}', [SettingsController::class, 'editTranslations'])->name('settings.translations-edit');
 
     // Update Routing
     Route::post('/settings-accomplishment-update/{id?}', [SettingsController::class, 'updateAccomplishment'])->name('settings.accomplishment-update');

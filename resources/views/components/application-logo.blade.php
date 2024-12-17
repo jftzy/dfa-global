@@ -3,4 +3,4 @@
 </svg>
  -->
 
- <img src="imgs/dfa-emblem.png" class="h-[45px] w-[45px]">
+ <img src="{{ env('APP_URL') }}/imgs/dfa-emblem.png" class="h-[45px] w-[45px]">
