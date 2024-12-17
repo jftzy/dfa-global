@@ -5,7 +5,11 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        <title>{{ config('app.name', 'DAMS') }}</title>
+
+        <!-- favicon -->
+        <link rel="shortcut icon" href="{{ asset('imgs/favicon.ico') }}">
+        <link rel="icon" href="{{ asset('imgs/favicon.ico') }}">
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -27,16 +31,28 @@
 
         @vite([ 'resources/css/app.css', 'resources/js/app.js'])
     </head>
+
+    <style type="text/css">
+        @media print {
+            .navigation-container-wrapper {
+                display: none !important;
+            }
+            .content-container-wrapper {
+                width: 100% !important;
+            }
+        }
+    </style>
+
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
             <div class="w-full flex flex-col lg:flex-row">
-                <div class="w-full lg:w-[15%]">
+                <div class="w-full lg:w-[15%] navigation-container-wrapper">
 
                     <!-- Navigation -->
                     @include('layouts.navigation')
 
                 </div>
-                <div class="w-full lg:w-[85%]">
+                <div class="w-full lg:w-[85%] content-container-wrapper">
 
                     <!-- Page Heading -->
                     @isset($header)

@@ -22,10 +22,28 @@
 				position: inherit;
 			}
 		}
+		@media print {
+	        .no-print {
+	            display: none !important;
+	        }
+	    }
+	    .floats{
+	    	position:fixed;
+	    	width:60px;
+	    	height:60px;
+	    	bottom:40px;
+	    	right:40px;
+	    	background-color:#0C9;
+	    	color:#FFF;
+	    	border-radius:50px;
+	    	text-align:center;
+	    	box-shadow: 2px 2px 3px #999;
+	    	cursor: pointer;
+	    }
 	</style>
 
 	<x-slot name="header">
-		<div class="w-full inline-flex justify-between">
+		<div class="w-full inline-flex justify-between no-print">
 		    <h2 class="font-semibold text-lg text-gray-100 leading-tight">
 		        {{ __('Reports -') }} <span class="text-[#fdc02f]">{{ __('Accomplishments') }}</span>
 		    </h2>
@@ -37,7 +55,7 @@
 		</div>
 	</x-slot>
 
-	<div class="border-b border-gray-300 shadow rounded p-4 interactive-table">
+	<div class="border-b border-gray-300 shadow rounded p-4 interactive-table no-print">
 		<form class="inline-flex items-center gap-4 flex-wrap lg:flex-nowrap">
 			<span class="text-sm font-bold- pl-2 text-gray-700">
 				Filters:
@@ -78,7 +96,7 @@
                         <th><span class="flex items-center">Strategic Plan</span></th>
                         <th><span class="flex items-center">Diplomacy</span></th>
                         <th><span class="flex items-center">Cultural Domains</span></th>
-                        <th><span class="flex items-center">Attached File</span></th>
+                        <th class="noExport"><span class="flex items-center">Attached File</span></th>
 			        </tr>
 			    </thead>
 			    <tbody>
@@ -97,7 +115,7 @@
 							<td>{{$d->strategic_plan}}</td>
 							<td>{{$d->diplomacy}}</td>
 							<td>{{$d->cultural_domains}}</td>
-							<td><a href="storage/uploads/{{$d->attached_file}}" title="View File">{{$d->attached_file}}</a></td>
+							<td class="noExport"><a href="storage/uploads/{{$d->attached_file}}" title="View File">{{$d->attached_file}}</a></td>
 						</tr>
 						@empty
 						@endforelse
@@ -111,7 +129,13 @@
 
 		<div class="w-full hidden" id="native-table">
 			<div class="w-full border border-gray-300 p-4 rounded-lg">
-				<div class="border text-center py-4 font-bold text-lg">DFA Cultural Diplomacy Framework <br /> Accomplishment Reports</div>
+				<div class="border text-center py-4 font-bold text-lg relative">
+					DFA Cultural Diplomacy Framework 
+					<br /> 
+					Accomplishment Reports
+					<button class="hidden no-print float-right border border-gray-300 rounded px-4 py-2" onclick="window.print()" style="transform: translate(-24px, -20px);">Print</button>
+				</div>
+				<button class="px-4 py-2 floats pointer no-print" title="Print" onclick="window.print()"><x-icons.icon-print class="w-8 h-8"></x-icons.icon-print></button>
 				<table class="w-full">
 					<thead>
 						<tr>
@@ -254,7 +278,14 @@
 	        dom: 'lBfrtip',
             buttons: [
 				{ extend: 'copy', text: '<i class="fas fa-file-copy fa-1x" aria-hidden="true"> <b>Copy Data</b></i>' },
-				{ extend: 'pdf', text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"><b>PDF</b></i>' },
+				{ 
+					extend: 'pdf', 
+					text: '<i class="fas fa-file-pdf fa-1x" aria-hidden="true"><b>PDF</b></i>', 
+					orientation : 'landscape',
+					exportOptions: {
+						columns: ":visible:not(.noExport)"
+					}
+				},
 				{ extend: 'csv', text: '<i class="fas fa-file-csv fa-1x"><b>CSV</b></i>' },
 				{ extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"><b>EXCEL</b></i>' },
 				'pageLength'

@@ -8,9 +8,14 @@
     .text-theme-gray {
         color: #343a40;
     }
+    @media print {
+        .no-print {
+            display: none !important;
+        }
+    }
 </style>
 
-<nav x-data="{ open: false }" class="lg:h-screen bg-[#0047ab] w-full lg:w-[15%] lg:fixed z-[999]">
+<nav x-data="{ open: false }" class="lg:h-screen bg-[#0047ab] w-full lg:w-[15%] lg:fixed z-[999] no-print">
     <!-- Primary Navigation Menu -->
     <div class="min-h-screen hidden lg:flex flex-col justify-between items-start px-4 border-r border-r-[#0047ab]">
         <div class="flex flex-col w-full ">
