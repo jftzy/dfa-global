@@ -371,14 +371,14 @@
 
         var chart = new google.visualization.GeoChart(document.getElementById('regions_div'));
 
-        google.visualization.events.addListener(chart, 'select', function () {
-          const selection = chart.getSelection();
-          if (selection.length > 0) {
-            const row = selection[0].row;
-            const country = data.getValue(row, 0);
-            get_data(country);
-          }
-        });
+        // google.visualization.events.addListener(chart, 'select', function () {
+        //   const selection = chart.getSelection();
+        //   if (selection.length > 0) {
+        //     const row = selection[0].row;
+        //     const country = data.getValue(row, 0);
+        //     get_data(country);
+        //   }
+        // });
 
         chart.draw(data, options);
     }
@@ -407,14 +407,28 @@
            pt_chart.push({ x: val.project_type, color: pickcolor(), y: val.total });
           });
 
-          pc_chart = [];
-          $('#tab_project_classification').html('');
-          $.each(response.project_classification , function(index, val) {
+          // pc_chart = [];
+          // $('#tab_project_classification').html('');
+          // $.each(response.project_classification , function(index, val) {
+          //   $('#tab_project_classification').append('<tr><td>'+val.project_classification+'</td><td>'+val.total+'</td></tr>');
+          //   pcArray.push(val.total);
+          //   pc_chart.push({ name: val.project_classification, color: pickcolor(), data: [val.total] });
+           
+          // });
+
+            pc_chart = [];
+            $('#tab_project_classification').html('');
+            var clrs = ["#f73119","#edf719","#19f726","#19f4f7","#1956f7", "#ed19f7", "#f7193e", "#8e3746", "#f0e39c", "#10032d", "#0aebf2", "#e30c23"];
+            var xxx = -1;
+            $.each(response.project_classification , function(index, val) {
+            xxx++;
             $('#tab_project_classification').append('<tr><td>'+val.project_classification+'</td><td>'+val.total+'</td></tr>');
             pcArray.push(val.total);
-            pc_chart.push({ name: val.project_classification, color: pickcolor(), data: [val.total] });
-           
-          });
+            pc_chart.push({ name: val.project_classification, color: clrs[xxx], data: [val.total] });
+
+            });
+
+
           console.log(pc_chart);
           $('#tab_foreign_policy_pillar').html('');
           $.each(response.foreign_policy_pillar , function(index, val) {
