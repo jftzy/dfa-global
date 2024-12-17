@@ -1,1 +1,1 @@
- <img src="{{ ENV('APP_URL')}}/imgs/dfa-emblem.png" {{ $attributes }}>
+ <img src="imgs/dfa-emblem.png" {{ $attributes }}>

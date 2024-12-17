@@ -179,7 +179,7 @@
 			{ extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"><b>EXCEL</b></i>' },
 			'pageLength'
 		],
-        ajax: { url: '{{ ENV('APP_URL') }}/api/events', },
+        ajax: { url: 'api/events', },
         columns: [
         	{ data: "host_communities" },
         	{ data: "filipino_communities" },

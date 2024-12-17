@@ -185,7 +185,7 @@
 			{ extend: 'excel', text: '<i class="fas fa-file-excel" aria-hidden="true"><b>EXCEL</b></i>' },
 			'pageLength'
 		],
-	    ajax: { url: '{{ ENV('APP_URL') }}/api/translations', },
+	    ajax: { url: 'api/translations', },
 	    columns: [
 	    	{ data: "book_title" },
 	    	{ data: "author" },

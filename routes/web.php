@@ -31,18 +31,29 @@ Route::middleware('auth')->group(function () {
 
     // Settings Routing
     Route::get('/settings-accomplishments', [SettingsController::class, 'accomplishments'])->name('settings.accomplishments');
-    Route::get('/settings-accomplishments-edit/{id?}', [SettingsController::class, 'editAccomplishments'])->name('settings.accomplishments-edit');
     Route::get('/settings-events', [SettingsController::class, 'events'])->name('settings.events');
     Route::get('/settings-translations', [SettingsController::class, 'translations'])->name('settings.translations');
 
+    // Edit Routing
+    Route::get('/settings-accomplishments-edit/{id?}', [SettingsController::class, 'editAccomplishments'])->name('settings.accomplishments-edit');
+    Route::get('/settings-events-edit/{id?}', [SettingsController::class, 'editEvents'])->name('settings.events-edit');
+
+    // Update Routing
     Route::post('/settings-accomplishment-update/{id?}', [SettingsController::class, 'updateAccomplishment'])->name('settings.accomplishment-update');
+    Route::post('/settings-event-update/{id?}', [SettingsController::class, 'updateEvent'])->name('settings.event-update');
+    Route::post('/settings-translation-update/{id?}', [SettingsController::class, 'updateTranslation'])->name('settings.translation-update');
 
+    // Delete Routing
     Route::post('/settings-accomplishment-delete/{id?}', [SettingsController::class, 'deleteAccomplishment'])->name('settings.accomplishment-delete');
+    Route::post('/settings-event-delete/{id?}', [SettingsController::class, 'deleteEvent'])->name('settings.event-delete');
+    Route::post('/settings-translation-delete/{id?}', [SettingsController::class, 'deleteTranslation'])->name('settings.translation-delete');
 
+    // Upload Routing
     Route::post('/settings-upload-accomplishments', [SettingsController::class, 'uploadAccomplishments'])->name('settings.upload-accomplishments');
     Route::post('/settings-upload-events', [SettingsController::class, 'uploadEvents'])->name('settings.upload-events');
     Route::post('/settings-upload-translations', [SettingsController::class, 'uploadTranslations'])->name('settings.upload-translations');
 
+    // Store/Save Routing
     Route::post('/settings-store-accomplishments', [SettingsController::class, 'storeAccomplishments'])->name('settings.store-accomplishments');
     Route::post('/settings-store-events', [SettingsController::class, 'storeEvents'])->name('settings.store-events');
     Route::post('/settings-store-translations', [SettingsController::class, 'storeTranslations'])->name('settings.store-translations');
