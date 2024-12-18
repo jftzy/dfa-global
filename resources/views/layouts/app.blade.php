@@ -21,6 +21,10 @@
         <!-- Datatables Scripts -->
         <script src="../node_modules/jquery/dist/jquery.min.js"></script>
         <script src="./js/datatables.min.js"></script>
+        <script src="./js/buttons.colVis.min.js"></script>
+        <script src="./js/dataTables.buttons.js"></script>
+        <script src="./js/dataTables.responsive.js"></script>
+        <script src="./js/responsive.dataTables.js"></script>
 
         <!-- Sir Jundrie CDN's -->
         <!-- <link rel="stylesheet" href="https://cdn.datatables.net/2.1.8/css/dataTables.dataTables.css" /> -->

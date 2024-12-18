@@ -70,21 +70,21 @@ class SettingsController extends Controller
             $month_converted = $this->monthConvertion($request['month']);
             
             // check country id
-            $countryId = Country::where('name', 'like', $report['country'])->first();
+            $countryId = Country::where('name', 'like', $report['Country'])->first();
 
             // values
             $accomplishment['country_id'] = $countryId['id'];
-            $accomplishment['title'] = $report['title'];
+            $accomplishment['title'] = $report['Title'];
             $accomplishment['month'] = $month_converted;
             $accomplishment['year'] = $request['year'];
             $accomplishment['quarter'] = $monthSelected;
-            $accomplishment['project_type'] = $report['project_type'];
-            $accomplishment['project_classification'] = $report['project_classification'];
-            $accomplishment['foreign_policy_pillar'] = $report['foreign_policy_pillar'];
-            $accomplishment['target_audience'] = $report['target_audience'];
-            $accomplishment['strategic_plan'] = $report['strategic_plan'];
-            $accomplishment['diplomacy'] = $report['diplomacy'];
-            $accomplishment['cultural_domains'] = $report['cultural_domains'];
+            $accomplishment['project_type'] = $report['Project type'];
+            $accomplishment['project_classification'] = $report['Project classification'];
+            $accomplishment['foreign_policy_pillar'] = $report['Foreign policy pillar'];
+            $accomplishment['target_audience'] = $report['Target audience'];
+            $accomplishment['strategic_plan'] = $report['Strategic plan'];
+            $accomplishment['diplomacy'] = $report['Diplomacy'];
+            $accomplishment['cultural_domains'] = $report['Cultural Domains'];
             $accomplishment['created_at'] = $dateTime;
             $accomplishment->save();
         }
@@ -133,11 +133,11 @@ class SettingsController extends Controller
             $events = new CulturalEventsAndTargetAudiences;
 
             // values
-            $events['host_communities'] = $report['host_communities'];
-            $events['filipino_communities'] = $report['filipino_communities'];
-            $events['other_stakeholders'] = $report['other_stakeholders'];
-            $events['title_of_the_event'] = $report['title_of_the_event'];
-            $events['short_description'] = $report['short_description'];
+            $events['host_communities'] = $report['Host communities'];
+            $events['filipino_communities'] = $report['Filipino communities'];
+            $events['other_stakeholders'] = $report['Other stakeholders'];
+            $events['title_of_the_event'] = $report['Title of the event'];
+            $events['short_description'] = $report['Short description'];
             $events['date_from'] = $request['date_from'];
             $events['date_to'] = $request['date_to'];
             $events->save();
@@ -185,13 +185,13 @@ class SettingsController extends Controller
             $translations = new Translation;
 
             // values
-            $translations['book_title'] = $report['book_title'];
-            $translations['author'] = $report['author'];
-            $translations['translator'] = $report['translator'];
-            $translations['language'] = $report['language'];
-            $translations['title_of_book_and_link'] = $report['title_of_book_and_link'];
-            $translations['year_of_translation'] = $report['year_of_translation'];
-            $translations['publisher'] = $report['publisher'];
+            $translations['book_title'] = $report['Book title'];
+            $translations['author'] = $report['Author'];
+            $translations['translator'] = $report['Translator'];
+            $translations['language'] = $report['Language'];
+            $translations['title_of_book_and_link'] = $report['Title of the book and link'];
+            $translations['year_of_translation'] = $report['Year of translation'];
+            $translations['publisher'] = $report['Publisher'];
             $translations->save();
         }
 
@@ -300,16 +300,21 @@ class SettingsController extends Controller
             'input_file_accomplishments' => 'max:5048'
         ]);
 
-        // store the file -- manipulate the data
         $file = $request->file('input_file_accomplishments');
-        $name = $file->getClientOriginalName();
-        $name = str_replace(',','_', $name);
-        $name = str_replace(' ','_', $name);
-        $name = explode('.', $name);
-        $time = date('hidmy');
-        $nameStack = $name[0].$time;
-        $name = implode('.', [$nameStack,$name[1]]);
-        $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
+
+        if ($file) {
+            // code...
+            $name = $file->getClientOriginalName();
+            $name = str_replace(',','_', $name);
+            $name = str_replace(' ','_', $name);
+            $name = explode('.', $name);
+            $time = date('hidmy');
+            $nameStack = $name[0].$time;
+            $name = implode('.', [$nameStack,$name[1]]);
+            $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
+        } else {
+            $name = '';
+        }
 
         $accomplishment = new Accomplishment;
         $accomplishment->country_id = $request['input_country'];
@@ -340,16 +345,22 @@ class SettingsController extends Controller
             'input_file_events' => 'max:5048'
         ]);
 
-        // store the file -- manipulate the data
         $file = $request->file('input_file_events');
-        $name = $file->getClientOriginalName();
-        $name = str_replace(',','_', $name);
-        $name = str_replace(' ','_', $name);
-        $name = explode('.', $name);
-        $time = date('hidmy');
-        $nameStack = $name[0].$time;
-        $name = implode('.', [$nameStack,$name[1]]);
-        $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
+
+        // store the file -- manipulate the data
+        if ($file) {
+            // code...
+            $name = $file->getClientOriginalName();
+            $name = str_replace(',','_', $name);
+            $name = str_replace(' ','_', $name);
+            $name = explode('.', $name);
+            $time = date('hidmy');
+            $nameStack = $name[0].$time;
+            $name = implode('.', [$nameStack,$name[1]]);
+            $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
+        } else {
+            $name = '';
+        }
 
         $events = new CulturalEventsAndTargetAudiences;
         // values
@@ -377,14 +388,20 @@ class SettingsController extends Controller
 
         // store the file -- manipulate the data
         $file = $request->file('input_file_translations');
-        $name = $file->getClientOriginalName();
-        $name = str_replace(',','_', $name);
-        $name = str_replace(' ','_', $name);
-        $name = explode('.', $name);
-        $time = date('hidmy');
-        $nameStack = $name[0].$time;
-        $name = implode('.', [$nameStack,$name[1]]);
-        $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
+
+        if ($file) {
+            // code...
+            $name = $file->getClientOriginalName();
+            $name = str_replace(',','_', $name);
+            $name = str_replace(' ','_', $name);
+            $name = explode('.', $name);
+            $time = date('hidmy');
+            $nameStack = $name[0].$time;
+            $name = implode('.', [$nameStack,$name[1]]);
+            $path = Storage::disk('public')->putFileAs('uploads', $file, $name);
+        } else {
+            $name = '';
+        }
 
         $translations = new Translation;
         // values
@@ -455,7 +472,7 @@ class SettingsController extends Controller
         return redirect('settings-accomplishments')->with('success', 'Data updated successfully.'); 
     }
 
-    public function updateEvents(Request $request, $id) {
+    public function updateEvent(Request $request, $id) {
 
         // validations
         $request->validate([

@@ -14,7 +14,7 @@
 
 
 	<div class="flex flex-col items-center bg-white border border-gray-200 rounded-lg mt-4 mx-3 shadow md:flex-row transition ease-in-out delay-150" :class="input_form ? 'block' : 'hidden -translate-y-14 z-[-999]' ">
-		<form action="{{ route('settings.event-update') }}" method="POST" enctype="multipart/form-data" class="w-full p-4 inline-flex gap-5">
+		<form action="{{ route('settings.event-update', $event->id) }}" method="POST" enctype="multipart/form-data" class="w-full p-4 inline-flex gap-5">
 			@csrf
 			<div class="w-1/2">
 
